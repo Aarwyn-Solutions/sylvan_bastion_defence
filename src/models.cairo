@@ -45,7 +45,7 @@ struct CurrentDungeon {
     squad_health: u32,
 }
 
-#[derive(Copy, Drop, Serde)]
+#[derive(Copy, Drop, Serde, Introspect)]
 struct Hero {
     hero_type: HeroType,
     item_1: Artifact,
@@ -121,7 +121,7 @@ enum Artifact {
     WoodenShield,
 }
 
-#[derive(Copy, Drop, Serde)]
+#[derive(Copy, Drop, Serde, Introspect)]
 enum DungeonType {
     None,
     GoblinDen,
