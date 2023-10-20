@@ -72,21 +72,21 @@ impl PlayerTraitImpl of PlayerTrait {
     }
 }
 
-#[derive(Model, Copy, Drop, Serde)]
-struct PlayerHeroes {
-    #[key]
-    id: ContractAddress,
-    hero_2: Hero,
-    hero_1: Hero,
-    hero_3: Hero,
-    hero_4: Hero,
-    hero_5: Hero,
-    hero_6: Hero,
-    hero_7: Hero,
-    hero_8: Hero,
-    hero_9: Hero,
-    hero_10: Hero,
-}
+// #[derive(Model, Copy, Drop, Serde)]
+// struct PlayerHeroes {
+//     #[key]
+//     id: ContractAddress,
+//     hero_2: Hero,
+//     hero_1: Hero,
+//     hero_3: Hero,
+//     hero_4: Hero,
+//     hero_5: Hero,
+//     hero_6: Hero,
+//     hero_7: Hero,
+//     hero_8: Hero,
+//     hero_9: Hero,
+//     hero_10: Hero,
+// }
 
 #[derive(Model, Copy, Drop, Serde)]
 struct CurrentDungeon {
