@@ -26,14 +26,28 @@ mod actions {
     #[event]
     #[derive(Drop, starknet::Event)]
     enum Event {
-        Moved: Moved,
+        PlayerCreated: PlayerCreated,
+        DungeonEntered: DungeonEntered,
+        DungeonLeft: DungeonLeft,
     }
 
-    // declaring custom event struct
     #[derive(Drop, starknet::Event)]
-    struct Moved {
-        player: ContractAddress,
+    struct PlayerCreated {
+        id: ContractAddress,
     }
+
+    #[derive(Drop, starknet::Event)]
+    struct DungeonEntered {
+        id: ContractAddress,
+        dungeon_type: DungeonType,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct DungeonLeft {
+        id: ContractAddress,
+        dungeon_type: DungeonType,
+    }
+
 
     // impl: implement functions specified in trait
     #[external(v0)]
@@ -75,7 +89,6 @@ mod actions {
             let id = get_caller_address();
 
             assert(dungeon_type.is_some(), 'wrong dungeon');
-            assert(dungeon_type.is_some(), 'wrong dungeon');
 
             let mut player = get!(world, (id), (Player));
             assert(player.gold >= gold, 'not enough gold');
@@ -87,18 +100,40 @@ mod actions {
 
             assert(!current_dungeon.dungeon_type.is_some(), 'another dungeon is in progress');
 
-            do_fight(ref player, ref current_dungeon);
+            do_fight(ref player, ref current_dungeon, world);
 
             set!(world, (player));
             set!(world, (current_dungeon));
         }
 
-            fn next_room(self: @ContractState) {
+        fn next_room(self: @ContractState) {
+            let id = get_caller_address();
+            let world = self.world_dispatcher.read();
 
+            let mut player = get!(world, (id), (Player));
+            let mut current_dungeon = get!(world, (id), (CurrentDungeon));
+            current_dungeon.current_room += 1;
+
+            do_fight(ref player, ref current_dungeon, world);
+
+            if current_dungeon.current_room >= current_dungeon.dungeon_type.dungeon_room_count() {
+                // give all rewards
+                let gold_reward = current_dungeon.dungeon_type.gold_reward();
+                player.gold += gold_reward;
+                // leave dungeon
+                do_leave_dungeon(world, ref current_dungeon);
+            }
+
+            set!(world, (player));
+            set!(world, (current_dungeon));
         }
 
         fn leave_dungeon(self: @ContractState) {
-
+            let world = self.world_dispatcher.read();
+            let id = get_caller_address();
+            let mut current_dungeon = get!(world, (id), (CurrentDungeon));
+            assert(current_dungeon.dungeon_type.is_some(), 'dungeon is not in progress');
+            do_leave_dungeon(world, ref current_dungeon);
         }
     }
 
@@ -119,7 +154,7 @@ mod actions {
         }
     }
 
-    fn do_fight(ref player: Player, ref current_dungeon: CurrentDungeon){
+    fn do_fight(ref player: Player, ref current_dungeon: CurrentDungeon, world: IWorldDispatcher) {
         let dungeon_type = current_dungeon.dungeon_type;
 
         // TODO! Remake to random from the interval
@@ -135,11 +170,18 @@ mod actions {
             };
 
             player.exp /= 2;
-            current_dungeon.reset();
+            do_leave_dungeon(world, ref current_dungeon);
         } else {
             player.exp += fight_result.plus_player_xp;
             player.add_heroes_exp(fight_result.plus_heroes_xp);
         }
+    }
+
+    fn do_leave_dungeon(world: IWorldDispatcher, ref current_dungeon: CurrentDungeon) {
+        let dungeon_type = current_dungeon.dungeon_type;
+        let id = get_caller_address();
+        emit!(world, DungeonLeft { id, dungeon_type });
+        current_dungeon.reset();
     }
 }
 

@@ -289,6 +289,7 @@ mod dungeon {
         fn dungeon_room_count(self: DungeonType) -> u8;
         fn dungeon_force_interval(self: DungeonType) -> (u32, u32);
         fn dungeon_defence_interval(self: DungeonType) -> (u32, u32);
+        fn gold_reward(self: @DungeonType) -> u32;
         fn is_some(self: DungeonType) -> bool;
     }
 
@@ -320,6 +321,15 @@ mod dungeon {
                 DungeonType::GoblinCamp => (0, 10),
                 DungeonType::WitchTown => (15, 30),
                 DungeonType::BlackTower => (20, 40),
+            }
+        }
+
+        fn gold_reward(self: @DungeonType) -> u32 {
+            match self {
+                DungeonType::None => 0,
+                DungeonType::GoblinCamp => 20,
+                DungeonType::WitchTown => 40,
+                DungeonType::BlackTower => 50,
             }
         }
 
