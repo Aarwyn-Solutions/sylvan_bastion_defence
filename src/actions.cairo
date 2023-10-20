@@ -1,24 +1,26 @@
 use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 use starknet::{ContractAddress, ClassHash};
 
-use sylvan_bastion_defence::models::{Player, Hero, HeroType, HeroTrait, Artifact, DungeonType, CurrentDungeon};
+use sylvan_bastion_defence::models::{Player, Hero, HeroType, HeroTrait, Artifact, dungeon::{DungeonType, CurrentDungeon}, };
 
 // define the interface
 #[starknet::interface]
 trait IActions<TContractState> {
     fn create_player(self: @TContractState);
     fn hire_hero(self: @TContractState, position: u8, hero: HeroType);
-    fn enter_dungeon(self: @TContractState,);
+    fn enter_dungeon(self: @TContractState, dungeon_type: DungeonType, gold: u32);
+    fn next_room(self: @TContractState);
+    fn leave_dungeon(self: @TContractState);
 }
 
 // dojo decorator
 #[dojo::contract]
 mod actions {
     use core::traits::Into;
-use starknet::{ContractAddress, get_caller_address};
+    use starknet::{ContractAddress, get_caller_address};
     use super::IActions;
 
-    use sylvan_bastion_defence::models::{Player, Hero, HeroType, HeroTrait, Artifact, DungeonType, CurrentDungeon};
+    use sylvan_bastion_defence::models::{Player, PlayerTrait, Hero, HeroType, HeroTrait, Artifact, dungeon::{DungeonType, DungeonTypeTrait, CurrentDungeon, CurrentDungeonTrait}, fight::fight};
 
     // declaring custom event struct
     #[event]
@@ -65,9 +67,42 @@ use starknet::{ContractAddress, get_caller_address};
             add_hero_on_pos(ref player, position, hero);
             set!(world, (player));
         }
-        fn enter_dungeon(self: @ContractState, ) {}
+
+        fn enter_dungeon(self: @ContractState, dungeon_type: DungeonType, gold: u32) {
+            let world = self.world_dispatcher.read();
+
+            // Get the address of the current caller, possibly the player's address.
+            let id = get_caller_address();
+
+            assert(dungeon_type.is_some(), 'wrong dungeon');
+            assert(dungeon_type.is_some(), 'wrong dungeon');
+
+            let mut player = get!(world, (id), (Player));
+            assert(player.gold >= gold, 'not enough gold');
+            player.gold -= gold;
+
+            let mut current_dungeon = get!(world, (id), (CurrentDungeon));
+            current_dungeon.squad_health = gold*100;
+            current_dungeon.current_room = 1;
+
+            assert(!current_dungeon.dungeon_type.is_some(), 'another dungeon is in progress');
+
+            do_fight(ref player, ref current_dungeon);
+
+            set!(world, (player));
+            set!(world, (current_dungeon));
+        }
+
+            fn next_room(self: @ContractState) {
+
+        }
+
+        fn leave_dungeon(self: @ContractState) {
+
+        }
     }
 
+    // helper functions
     fn add_hero_on_pos(ref player: Player, position: u8, hero: HeroType) {
         assert(player.gold >=10, 'not enough gold');
         player.gold -= 10;
@@ -81,6 +116,29 @@ use starknet::{ContractAddress, get_caller_address};
             player.pos_4 = HeroTrait::new(hero);
         } else if position ==5 {
             player.pos_5 = HeroTrait::new(hero);
+        }
+    }
+
+    fn do_fight(ref player: Player, ref current_dungeon: CurrentDungeon){
+        let dungeon_type = current_dungeon.dungeon_type;
+
+        // TODO! Remake to random from the interval
+        let (dungeon_force, _) = dungeon_type.dungeon_force_interval();
+        let (dungeon_def, _) = dungeon_type.dungeon_defence_interval();
+
+        let fight_result = fight(player.calculate_squad_force(), player.calculate_squad_defence(), dungeon_force, dungeon_def);
+
+        if fight_result.minus_health >= current_dungeon.squad_health {
+            let new_player_exp = match integer::u32_checked_sub(player.exp, fight_result.plus_player_xp) {
+                Option::Some(a) => a,
+                Option::None => 0,
+            };
+
+            player.exp /= 2;
+            current_dungeon.reset();
+        } else {
+            player.exp += fight_result.plus_player_xp;
+            player.add_heroes_exp(fight_result.plus_heroes_xp);
         }
     }
 }
