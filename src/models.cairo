@@ -249,9 +249,24 @@ fn fight(squad_force: u32, squad_defence: u32, room_force: u32, room_defence: u3
     let count = if squad_force >= room_defence {1} else {
         (room_defence - squad_force)/squad_force + 1
     };
+    let minus_health = if squad_defence >= room_force {0} else {
+        let diff = room_force - squad_defence;
+        count*diff
+    };
+
+    let base_xp = 5;
+    let base_force_xp = 1;
+    let base_defence_xp = 1;
+
+    let plus_defence_xp = base_defence_xp*(room_defence/squad_defence);
+    let plus_force_xp = base_defence_xp*(room_force/squad_force);
+
+    let plus_player_xp = plus_defence_xp + plus_force_xp;
+    let plus_heroes_xp = plus_defence_xp + plus_force_xp + base_xp;
+
     FightResult {
-        minus_health: 0,
-        plus_player_xp: 0,
-        plus_heroes_xp: 0,
+        minus_health,
+        plus_player_xp,
+        plus_heroes_xp,
     }
 }
