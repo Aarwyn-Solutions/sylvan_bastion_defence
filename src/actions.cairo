@@ -197,7 +197,7 @@ mod tests {
     use dojo::test_utils::{spawn_test_world, deploy_contract};
 
     use super::{actions,IActions, IActionsDispatcher, IActionsDispatcherTrait};
-    use sylvan_bastion_defence::models::{Player,player,  Hero, HeroType, HeroTrait, Artifact, DungeonType, CurrentDungeon, current_dungeon};
+    use sylvan_bastion_defence::models::{Player, player,  Hero, HeroType, HeroTrait, Artifact, dungeon::{DungeonType, CurrentDungeon, current_dungeon},};
 
     fn init() -> IWorldDispatcher {
         // models
