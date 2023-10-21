@@ -60,7 +60,7 @@ mod actions {
             set!(world, (Player {
                 id: player,
                 exp: 0_u32,
-                gold: 100_u32,
+                gold: 10000_u32,
                 in_dungeon: false,
                 pos_1: HeroTrait::default(),
                 pos_2: HeroTrait::default(),
@@ -210,8 +210,6 @@ mod tests {
         world
     }
 
-    // fn player_created() -> 
-
     #[test]
     #[available_gas(200000000)]
     fn create_player_ok() {
@@ -268,6 +266,80 @@ mod tests {
         assert(player.pos_1.hero_type == HeroType::Mage, 'pos_1.hero_type != Archer');
         assert(player.pos_2.hero_type == HeroType::None, 'pos_2.hero_type != None');
         assert(player.pos_3.hero_type == HeroType::Druid, 'pos_3.hero_type != Druid');
+    }
 
+    #[test]
+    #[available_gas(2000000000)]
+    fn enter_dungeon_ok() {
+        let player_address = starknet::contract_address_const::<0x01>();
+        
+        let world = init();
+
+        let contract_address = world
+            .deploy_contract('salt', actions::TEST_CLASS_HASH.try_into().unwrap());
+        let actions = IActionsDispatcher { contract_address };
+        // to call contract from first address
+        set_contract_address(player_address);
+        actions.create_player();
+
+        // hire a party
+        actions.hire_hero(1, HeroType::Archer);
+        actions.hire_hero(2, HeroType::Druid);
+        actions.hire_hero(3, HeroType::Mage);
+        actions.hire_hero(4, HeroType::Knight);
+        actions.hire_hero(5, HeroType::Vendigo);
+
+        actions.enter_dungeon(DungeonType::GoblinCamp, 50);
+    }
+
+    #[test]
+    #[available_gas(2000000000)]
+    fn next_room_ok() {
+        let player_address = starknet::contract_address_const::<0x01>();
+        
+        let world = init();
+
+        let contract_address = world
+            .deploy_contract('salt', actions::TEST_CLASS_HASH.try_into().unwrap());
+        let actions = IActionsDispatcher { contract_address };
+        // to call contract from first address
+        set_contract_address(player_address);
+        actions.create_player();
+
+        // hire a party
+        actions.hire_hero(1, HeroType::Archer);
+        actions.hire_hero(2, HeroType::Druid);
+        actions.hire_hero(3, HeroType::Mage);
+        actions.hire_hero(4, HeroType::Knight);
+        actions.hire_hero(5, HeroType::Vendigo);
+
+        actions.enter_dungeon(DungeonType::GoblinCamp, 5000);
+        actions.next_room();
+    }
+
+    #[test]
+    #[available_gas(2000000000)]
+    fn leave_dungeon_ok() {
+        let player_address = starknet::contract_address_const::<0x01>();
+        
+        let world = init();
+
+        let contract_address = world
+            .deploy_contract('salt', actions::TEST_CLASS_HASH.try_into().unwrap());
+        let actions = IActionsDispatcher { contract_address };
+        // to call contract from first address
+        set_contract_address(player_address);
+        actions.create_player();
+
+        // hire a party
+        actions.hire_hero(1, HeroType::Archer);
+        actions.hire_hero(2, HeroType::Druid);
+        actions.hire_hero(3, HeroType::Mage);
+        actions.hire_hero(4, HeroType::Knight);
+        actions.hire_hero(5, HeroType::Vendigo);
+
+        actions.enter_dungeon(DungeonType::BlackTower, 5000);
+        actions.next_room();
+        actions.leave_dungeon();
     }
 }
