@@ -7,7 +7,7 @@ Terminal 2 - Contracts:
 ```cd game && sozo build && sozo migrate```
 
 // Basic Auth - This will allow burner Accounts to interact with the contracts
-```sh ./game/scripts/default_auth.sh```
+```./scripts/default_auth.sh```
 Terminal 3 - Client:
 ```cd client && yarn && yarn dev```
 

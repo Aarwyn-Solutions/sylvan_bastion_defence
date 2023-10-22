@@ -11,16 +11,41 @@ export function defineContractComponents(world: World) {
         {
           exp: RecsType.Number,
           gold: RecsType.Number,
-          pos_1: RecsType.Number,
-          pos_2: RecsType.Number,
-          pos_3: RecsType.Number,
-          pos_4: RecsType.Number,
-          pos_5: RecsType.Number,
+          pos_1: {
+            hero_type: RecsType.Number,
+            item_1: RecsType.Number,
+            item_2: RecsType.Number,
+            exp: RecsType.Number,
+          },
+          pos_2: {
+            hero_type: RecsType.Number,
+            item_1: RecsType.Number,
+            item_2: RecsType.Number,
+            exp: RecsType.Number,
+          },
+          pos_3: {
+            hero_type: RecsType.Number,
+            item_1: RecsType.Number,
+            item_2: RecsType.Number,
+            exp: RecsType.Number,
+          },
+          pos_4: {
+            hero_type: RecsType.Number,
+            item_1: RecsType.Number,
+            item_2: RecsType.Number,
+            exp: RecsType.Number,
+          },
+          pos_5: {
+            hero_type: RecsType.Number,
+            item_1: RecsType.Number,
+            item_2: RecsType.Number,
+            exp: RecsType.Number,
+          },
         },
         {
           metadata: {
             name: name,
-            types: ["u32","u32","Hero","Hero","Hero","Hero","Hero"],
+            types: ["u32", "u32", "Hero", "Hero", "Hero", "Hero", "Hero"],
           },
         }
       );
@@ -37,7 +62,7 @@ export function defineContractComponents(world: World) {
         {
           metadata: {
             name: name,
-            types: ["DungeonType","u8","u32"],
+            types: ["DungeonType", "u8", "u32"],
           },
         }
       );

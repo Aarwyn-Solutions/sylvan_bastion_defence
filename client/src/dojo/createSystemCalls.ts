@@ -86,6 +86,19 @@ export function createSystemCalls(
     }
 
     const enter_dungeon = async (signer: Account, dungeon_type: DungeonType, gold: Number) => {
+        const entityId = signer.address.toString() as EntityIndex;
+
+        const playerId = uuid();
+        Player.addOverride(playerId, {
+            entity: entityId,
+            value: getComponentValue(Player, entityId)
+        });
+
+        const dungeonId = uuid();
+        CurrentDungeon.addOverride(dungeonId, {
+            entity: entityId,
+            value: getComponentValue(CurrentDungeon, entityId)
+        });
         try {
             const tx = await execute(signer, "actions", 'enter_dungeon', [dungeon_type, gold as BigNumberish]);
             setComponentsFromEvents(contractComponents,
@@ -98,11 +111,29 @@ export function createSystemCalls(
 
         } catch (e) {
             console.log(e)
+            Player.removeOverride(playerId);
+            CurrentDungeon.removeOverride(dungeonId);
         } finally {
+            Player.removeOverride(playerId);
+            CurrentDungeon.removeOverride(dungeonId);
         }
     }
 
     const next_room = async (signer: Account) => {
+        const entityId = signer.address.toString() as EntityIndex;
+
+        const playerId = uuid();
+        Player.addOverride(playerId, {
+            entity: entityId,
+            value: getComponentValue(Player, entityId)
+        });
+
+        const dungeonId = uuid();
+        CurrentDungeon.addOverride(dungeonId, {
+            entity: entityId,
+            value: getComponentValue(CurrentDungeon, entityId)
+        });
+
         try {
             const tx = await execute(signer, "actions", 'next_room', []);
             setComponentsFromEvents(contractComponents,
@@ -115,11 +146,29 @@ export function createSystemCalls(
 
         } catch (e) {
             console.log(e)
+            Player.removeOverride(playerId);
+            CurrentDungeon.removeOverride(dungeonId);
         } finally {
+            Player.removeOverride(playerId);
+            CurrentDungeon.removeOverride(dungeonId);
         }
     }
 
     const leave_dungeon = async (signer: Account) => {
+        const entityId = signer.address.toString() as EntityIndex;
+
+        const playerId = uuid();
+        Player.addOverride(playerId, {
+            entity: entityId,
+            value: getComponentValue(Player, entityId)
+        });
+
+        const dungeonId = uuid();
+        CurrentDungeon.addOverride(dungeonId, {
+            entity: entityId,
+            value: getComponentValue(CurrentDungeon, entityId)
+        });
+
         try {
             const tx = await execute(signer, "actions", 'leave_dungeon', []);
             setComponentsFromEvents(contractComponents,
@@ -132,7 +181,11 @@ export function createSystemCalls(
 
         } catch (e) {
             console.log(e)
+            Player.removeOverride(playerId);
+            CurrentDungeon.removeOverride(dungeonId);
         } finally {
+            Player.removeOverride(playerId);
+            CurrentDungeon.removeOverride(dungeonId);
         }
     }
 

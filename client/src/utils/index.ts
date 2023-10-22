@@ -11,8 +11,35 @@ export function hireHero(player: Player, pos: number, hero: HeroType): Player {
             item_2: Artifact.None,
             exp: 0
         }
+    } else if (pos == 2) {
+        player.pos_2 = {
+            hero_type: hero,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0
+        }
+    } else if (pos == 3) {
+        player.pos_3 = {
+            hero_type: hero,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0
+        }
+    } else if (pos == 4) {
+        player.pos_4 = {
+            hero_type: hero,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0
+        }
+    } else if (pos == 5) {
+        player.pos_5 = {
+            hero_type: hero,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0
+        }
     }
-    //todo
     return player;
 }
 

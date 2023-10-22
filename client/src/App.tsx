@@ -70,7 +70,7 @@ function App() {
         <div>Player hero5: {player ? (player.pos_5 ? `${player.pos_5['hero_type']}` : 'Need to hire hero') : 'Need to create_player'}</div>
         <button onClick={() => hire_hero(account, 1, HeroType.Archer)}>Hire hero</button>
         <button onClick={() => enter_dungeon(account, DungeonType.BlackTower, 100)}>Enter dungeon</button>
-        {dungeon && (<div>
+        {(dungeon || dungeon.dungeon_type == DungeonType.None) && (<div>
           <button onClick={() => next_room(account)}>Next room</button>
           <button onClick={() => leave_dungeon(account)}>Leave</button>
 
