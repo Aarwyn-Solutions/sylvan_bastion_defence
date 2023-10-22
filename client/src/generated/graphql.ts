@@ -20,9 +20,68 @@ export type Scalars = {
   Cursor: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   Enum: { input: any; output: any; }
+  bool: { input: any; output: any; }
   felt252: { input: any; output: any; }
   u8: { input: any; output: any; }
   u32: { input: any; output: any; }
+};
+
+export type CurrentDungeon = {
+  __typename?: 'CurrentDungeon';
+  current_room?: Maybe<Scalars['u8']['output']>;
+  dungeon_type?: Maybe<Scalars['Enum']['output']>;
+  entity?: Maybe<Entity>;
+  id?: Maybe<Scalars['ContractAddress']['output']>;
+  squad_health?: Maybe<Scalars['u32']['output']>;
+};
+
+export type CurrentDungeonConnection = {
+  __typename?: 'CurrentDungeonConnection';
+  edges?: Maybe<Array<Maybe<CurrentDungeonEdge>>>;
+  total_count: Scalars['Int']['output'];
+};
+
+export type CurrentDungeonEdge = {
+  __typename?: 'CurrentDungeonEdge';
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  node?: Maybe<CurrentDungeon>;
+};
+
+export type CurrentDungeonOrder = {
+  direction: OrderDirection;
+  field: CurrentDungeonOrderField;
+};
+
+export enum CurrentDungeonOrderField {
+  CurrentRoom = 'CURRENT_ROOM',
+  DungeonType = 'DUNGEON_TYPE',
+  Id = 'ID',
+  SquadHealth = 'SQUAD_HEALTH'
+}
+
+export type CurrentDungeonWhereInput = {
+  current_room?: InputMaybe<Scalars['u8']['input']>;
+  current_roomEQ?: InputMaybe<Scalars['u8']['input']>;
+  current_roomGT?: InputMaybe<Scalars['u8']['input']>;
+  current_roomGTE?: InputMaybe<Scalars['u8']['input']>;
+  current_roomLT?: InputMaybe<Scalars['u8']['input']>;
+  current_roomLTE?: InputMaybe<Scalars['u8']['input']>;
+  current_roomNEQ?: InputMaybe<Scalars['u8']['input']>;
+  dungeon_type?: InputMaybe<Scalars['Enum']['input']>;
+  id?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idNEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+  squad_health?: InputMaybe<Scalars['u32']['input']>;
+  squad_healthEQ?: InputMaybe<Scalars['u32']['input']>;
+  squad_healthGT?: InputMaybe<Scalars['u32']['input']>;
+  squad_healthGTE?: InputMaybe<Scalars['u32']['input']>;
+  squad_healthLT?: InputMaybe<Scalars['u32']['input']>;
+  squad_healthLTE?: InputMaybe<Scalars['u32']['input']>;
+  squad_healthNEQ?: InputMaybe<Scalars['u32']['input']>;
 };
 
 export type Entity = {
@@ -70,6 +129,14 @@ export type EventEdge = {
   node?: Maybe<Event>;
 };
 
+export type Hero = {
+  __typename?: 'Hero';
+  exp?: Maybe<Scalars['u32']['output']>;
+  hero_type?: Maybe<Scalars['Enum']['output']>;
+  item_1?: Maybe<Scalars['Enum']['output']>;
+  item_2?: Maybe<Scalars['Enum']['output']>;
+};
+
 export type Metadata = {
   __typename?: 'Metadata';
   id?: Maybe<Scalars['ID']['output']>;
@@ -109,103 +176,90 @@ export type ModelEdge = {
   node?: Maybe<Model>;
 };
 
-export type ModelUnion = Moves | Position;
-
-export type Moves = {
-  __typename?: 'Moves';
-  entity?: Maybe<Entity>;
-  last_direction?: Maybe<Scalars['Enum']['output']>;
-  player?: Maybe<Scalars['ContractAddress']['output']>;
-  remaining?: Maybe<Scalars['u8']['output']>;
-};
-
-export type MovesConnection = {
-  __typename?: 'MovesConnection';
-  edges?: Maybe<Array<Maybe<MovesEdge>>>;
-  total_count: Scalars['Int']['output'];
-};
-
-export type MovesEdge = {
-  __typename?: 'MovesEdge';
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  node?: Maybe<Moves>;
-};
-
-export type MovesOrder = {
-  direction: OrderDirection;
-  field: MovesOrderField;
-};
-
-export enum MovesOrderField {
-  LastDirection = 'LAST_DIRECTION',
-  Player = 'PLAYER',
-  Remaining = 'REMAINING'
-}
-
-export type MovesWhereInput = {
-  last_direction?: InputMaybe<Scalars['Enum']['input']>;
-  player?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerGT?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerGTE?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerLT?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerLTE?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerNEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
-  remaining?: InputMaybe<Scalars['u8']['input']>;
-  remainingEQ?: InputMaybe<Scalars['u8']['input']>;
-  remainingGT?: InputMaybe<Scalars['u8']['input']>;
-  remainingGTE?: InputMaybe<Scalars['u8']['input']>;
-  remainingLT?: InputMaybe<Scalars['u8']['input']>;
-  remainingLTE?: InputMaybe<Scalars['u8']['input']>;
-  remainingNEQ?: InputMaybe<Scalars['u8']['input']>;
-};
+export type ModelUnion = CurrentDungeon | Player;
 
 export enum OrderDirection {
   Asc = 'ASC',
   Desc = 'DESC'
 }
 
-export type Position = {
-  __typename?: 'Position';
+export type Player = {
+  __typename?: 'Player';
   entity?: Maybe<Entity>;
-  player?: Maybe<Scalars['ContractAddress']['output']>;
-  vec?: Maybe<Vec2>;
+  exp?: Maybe<Scalars['u32']['output']>;
+  gold?: Maybe<Scalars['u32']['output']>;
+  id?: Maybe<Scalars['ContractAddress']['output']>;
+  in_dungeon?: Maybe<Scalars['bool']['output']>;
+  pos_1?: Maybe<Hero>;
+  pos_2?: Maybe<Hero>;
+  pos_3?: Maybe<Hero>;
+  pos_4?: Maybe<Hero>;
+  pos_5?: Maybe<Hero>;
 };
 
-export type PositionConnection = {
-  __typename?: 'PositionConnection';
-  edges?: Maybe<Array<Maybe<PositionEdge>>>;
+export type PlayerConnection = {
+  __typename?: 'PlayerConnection';
+  edges?: Maybe<Array<Maybe<PlayerEdge>>>;
   total_count: Scalars['Int']['output'];
 };
 
-export type PositionEdge = {
-  __typename?: 'PositionEdge';
+export type PlayerEdge = {
+  __typename?: 'PlayerEdge';
   cursor?: Maybe<Scalars['Cursor']['output']>;
-  node?: Maybe<Position>;
+  node?: Maybe<Player>;
 };
 
-export type PositionOrder = {
+export type PlayerOrder = {
   direction: OrderDirection;
-  field: PositionOrderField;
+  field: PlayerOrderField;
 };
 
-export enum PositionOrderField {
-  Player = 'PLAYER',
-  Vec = 'VEC'
+export enum PlayerOrderField {
+  Exp = 'EXP',
+  Gold = 'GOLD',
+  Id = 'ID',
+  InDungeon = 'IN_DUNGEON',
+  Pos_1 = 'POS_1',
+  Pos_2 = 'POS_2',
+  Pos_3 = 'POS_3',
+  Pos_4 = 'POS_4',
+  Pos_5 = 'POS_5'
 }
 
-export type PositionWhereInput = {
-  player?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerGT?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerGTE?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerLT?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerLTE?: InputMaybe<Scalars['ContractAddress']['input']>;
-  playerNEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+export type PlayerWhereInput = {
+  exp?: InputMaybe<Scalars['u32']['input']>;
+  expEQ?: InputMaybe<Scalars['u32']['input']>;
+  expGT?: InputMaybe<Scalars['u32']['input']>;
+  expGTE?: InputMaybe<Scalars['u32']['input']>;
+  expLT?: InputMaybe<Scalars['u32']['input']>;
+  expLTE?: InputMaybe<Scalars['u32']['input']>;
+  expNEQ?: InputMaybe<Scalars['u32']['input']>;
+  gold?: InputMaybe<Scalars['u32']['input']>;
+  goldEQ?: InputMaybe<Scalars['u32']['input']>;
+  goldGT?: InputMaybe<Scalars['u32']['input']>;
+  goldGTE?: InputMaybe<Scalars['u32']['input']>;
+  goldLT?: InputMaybe<Scalars['u32']['input']>;
+  goldLTE?: InputMaybe<Scalars['u32']['input']>;
+  goldNEQ?: InputMaybe<Scalars['u32']['input']>;
+  id?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idNEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+  in_dungeon?: InputMaybe<Scalars['bool']['input']>;
+  in_dungeonEQ?: InputMaybe<Scalars['bool']['input']>;
+  in_dungeonGT?: InputMaybe<Scalars['bool']['input']>;
+  in_dungeonGTE?: InputMaybe<Scalars['bool']['input']>;
+  in_dungeonLT?: InputMaybe<Scalars['bool']['input']>;
+  in_dungeonLTE?: InputMaybe<Scalars['bool']['input']>;
+  in_dungeonNEQ?: InputMaybe<Scalars['bool']['input']>;
 };
 
 export type Query = {
   __typename?: 'Query';
+  currentdungeonModels?: Maybe<CurrentDungeonConnection>;
   entities?: Maybe<EntityConnection>;
   entity: Entity;
   events?: Maybe<EventConnection>;
@@ -213,12 +267,23 @@ export type Query = {
   metadatas?: Maybe<MetadataConnection>;
   model: Model;
   models?: Maybe<ModelConnection>;
-  movesModels?: Maybe<MovesConnection>;
-  positionModels?: Maybe<PositionConnection>;
+  playerModels?: Maybe<PlayerConnection>;
   system: System;
   systemCall: SystemCall;
   systemCalls?: Maybe<SystemCallConnection>;
   systems?: Maybe<SystemConnection>;
+};
+
+
+export type QueryCurrentdungeonModelsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<CurrentDungeonOrder>;
+  where?: InputMaybe<CurrentDungeonWhereInput>;
 };
 
 
@@ -278,27 +343,15 @@ export type QueryModelsArgs = {
 };
 
 
-export type QueryMovesModelsArgs = {
+export type QueryPlayerModelsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order?: InputMaybe<MovesOrder>;
-  where?: InputMaybe<MovesWhereInput>;
-};
-
-
-export type QueryPositionModelsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order?: InputMaybe<PositionOrder>;
-  where?: InputMaybe<PositionWhereInput>;
+  order?: InputMaybe<PlayerOrder>;
+  where?: InputMaybe<PlayerWhereInput>;
 };
 
 
@@ -391,16 +444,10 @@ export type SystemEdge = {
   node?: Maybe<System>;
 };
 
-export type Vec2 = {
-  __typename?: 'Vec2';
-  x?: Maybe<Scalars['u32']['output']>;
-  y?: Maybe<Scalars['u32']['output']>;
-};
-
 export type GetEntitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Moves', remaining?: any | null, last_direction?: any | null } | { __typename: 'Position', vec?: { __typename?: 'Vec2', x?: any | null, y?: any | null } | null } | null> | null } | null } | null> | null } | null };
+export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'CurrentDungeon', dungeon_type?: any | null, current_room?: any | null, squad_health?: any | null } | { __typename: 'Player', exp?: any | null, gold?: any | null, in_dungeon?: any | null, pos_1?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_2?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_3?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_4?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_5?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null } | null> | null } | null } | null> | null } | null };
 
 
 export const GetEntitiesDocument = gql`
@@ -411,15 +458,45 @@ export const GetEntitiesDocument = gql`
         keys
         models {
           __typename
-          ... on Moves {
-            remaining
-            last_direction
-          }
-          ... on Position {
-            vec {
-              x
-              y
+          ... on Player {
+            exp
+            gold
+            in_dungeon
+            pos_1 {
+              hero_type
+              item_1
+              item_2
+              exp
             }
+            pos_2 {
+              hero_type
+              item_1
+              item_2
+              exp
+            }
+            pos_3 {
+              hero_type
+              item_1
+              item_2
+              exp
+            }
+            pos_4 {
+              hero_type
+              item_1
+              item_2
+              exp
+            }
+            pos_5 {
+              hero_type
+              item_1
+              item_2
+              exp
+            }
+          }
+          ... on CurrentDungeon {
+            dungeon_type
+            current_room
+            squad_health
           }
         }
       }

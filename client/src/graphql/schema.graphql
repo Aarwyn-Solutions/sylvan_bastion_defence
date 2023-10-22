@@ -5,15 +5,45 @@ query getEntities {
         keys
         models {
           __typename
-          ... on Moves {
-            remaining
-            last_direction
-          }
-          ... on Position {
-            vec {
-              x
-              y
+          ... on Player {
+            exp
+            gold
+            in_dungeon
+            pos_1 {
+              hero_type
+              item_1
+              item_2
+              exp
             }
+            pos_2 {
+              hero_type
+              item_1
+              item_2
+              exp
+            }
+            pos_3 {
+              hero_type
+              item_1
+              item_2
+              exp
+            }
+            pos_4 {
+              hero_type
+              item_1
+              item_2
+              exp
+            }
+            pos_5 {
+              hero_type
+              item_1
+              item_2
+              exp
+            }
+          }
+          ... on CurrentDungeon {
+              dungeon_type 
+              current_room
+              squad_health
           }
         }
       }
