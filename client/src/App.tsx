@@ -8,7 +8,7 @@ import { setComponentsFromGraphQLEntities } from '@dojoengine/utils';
 function App() {
   const {
     setup: {
-      systemCalls: { spawn, move },
+      systemCalls: { create_player },
       components,
       network: { graphSdk, contractComponents }
     },
@@ -22,10 +22,11 @@ function App() {
   const entityId = account.address.toString();
 
   // get current component values
-  const position = useComponentValue(components.Position, entityId as Entity);
-  const moves = useComponentValue(components.Moves, entityId as Entity);
+  const player = useComponentValue(components.Player, entityId as Entity);
+  const dungeon = useComponentValue(components.CurrentDungeon, entityId as Entity);
 
-  console.log("position", position);
+  console.log("player", player);
+  console.log("dungeon", dungeon);
 
   // use graphql to current state data
   useEffect(() => {
@@ -58,16 +59,19 @@ function App() {
         </select>
       </div>
       <div className="card">
-        <button onClick={() => spawn(account)}>Spawn</button>
-        <div>Moves Left: {moves ? `${moves['remaining']}` : 'Need to Spawn'}</div>
-        <div>Position: {position ? `${position.vec['x']}, ${position.vec['y']}` : 'Need to Spawn'}</div>
+        <button onClick={() => create_player(account)}>Create player</button>
+        <div>Player expirience: {player ? `${player['exp']}` : 'Need to create_player'}</div>
+        <div>Player gold: {player ? `${player['gold']}` : 'Need to create_player'}</div>
+        <div>Is player in dungeon?: {player ? `${player['in_dungeon']}` : 'Need to create_player'}</div>
+        {/* <div>Position: {position ? `${position.vec['x']}, ${position.vec['y']}` : 'Need to '}</div> */}
+        <div>Current dungeon: {dungeon ? `${dungeon['dungeon_type']}, ${dungeon['current_room']}` : 'Need to enter dungeon'}</div>
       </div>
-      <div className="card">
+      {/* <div className="card">
         <button onClick={() => move(account, Direction.Up)}>Move Up</button> <br />
         <button onClick={() => move(account, Direction.Left)}>Move Left</button>
         <button onClick={() => move(account, Direction.Right)}>Move Right</button> <br />
         <button onClick={() => move(account, Direction.Down)}>Move Down</button>
-      </div>
+      </div> */}
     </>
   );
 }

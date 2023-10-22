@@ -33,7 +33,7 @@ mod actions {
 
     #[derive(Drop, starknet::Event)]
     struct PlayerCreated {
-        id: ContractAddress,
+        player: Player
     }
 
     #[derive(Drop, starknet::Event)]
@@ -55,10 +55,10 @@ mod actions {
         fn create_player(self: @ContractState,) {
             let world = self.world_dispatcher.read();
             // Get the address of the current caller, possibly the player's address.
-            let player = get_caller_address();
+            let player_address = get_caller_address();
 
-            set!(world, (Player {
-                id: player,
+            let player = Player {
+                id: player_address,
                 exp: 0_u32,
                 gold: 10000_u32,
                 in_dungeon: false,
@@ -67,7 +67,9 @@ mod actions {
                 pos_3: HeroTrait::default(),
                 pos_4: HeroTrait::default(),
                 pos_5: HeroTrait::default(),
-            }));
+            };
+            set!(world, (player));
+            emit!(world, PlayerCreated{player});
         }
 
         fn hire_hero(self: @ContractState, position: u8, hero: HeroType) {

@@ -12,6 +12,6 @@ Terminal 3 - Client:
 ```cd client && yarn && yarn dev```
 
 Terminal 4 - Torii:
-Uncomment the 'world_address' parameter in dojo-starter/Scarb.toml then:
+Uncomment the 'world_address' parameter in dojo-game/Scarb.toml then:
 
 ```cd game && torii --world <WORLD_ADDRESS>```
