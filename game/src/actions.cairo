@@ -31,6 +31,12 @@ mod actions {
         DungeonEntered: DungeonEntered,
         DungeonNextRoom: DungeonNextRoom,
         DungeonLeft: DungeonLeft,
+        Hero1Hired: Hero1Hired,
+        Hero2Hired: Hero2Hired,
+        Hero3Hired: Hero3Hired,
+        Hero1ExpIncreased: Hero1ExpIncreased,
+        Hero2ExpIncreased: Hero2ExpIncreased,
+        Hero3ExpIncreased: Hero3ExpIncreased
     }
 
     #[derive(Drop, starknet::Event)]
@@ -60,6 +66,41 @@ mod actions {
         current_dungeon: CurrentDungeon
     }
 
+    #[derive(Drop, starknet::Event)]
+    struct Hero1Hired {
+        hero_1: Hero1,
+        player: Player,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct Hero2Hired {
+        hero_2: Hero2,
+        player: Player,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct Hero3Hired {
+        hero_3: Hero3,
+        player: Player,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct Hero1ExpIncreased {
+        hero_1: Hero1,
+        player: Player,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct Hero2ExpIncreased {
+        hero_2: Hero2,
+        player: Player,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct Hero3ExpIncreased {
+        hero_3: Hero3,
+        player: Player,
+    }
 
     // impl: implement functions specified in trait
     #[external(v0)]
@@ -158,14 +199,17 @@ mod actions {
         assert(position < 4 && position >0, 'position wrong');
         player.gold -= 10;
         if position == 1 {
-            let hero = Hero1 {id: player.id, hero_type: hero, exp: 0};
-            set!(world, (hero));
+            let hero_1 = Hero1 {id: player.id, hero_type: hero, exp: 0};
+            emit!(world, Hero1Hired {hero_1, player});
+            set!(world, (hero_1));
         } else if position == 2 {
-            let hero = Hero2 {id: player.id, hero_type: hero, exp: 0};
-            set!(world, (hero));
+            let hero_2 = Hero2 {id: player.id, hero_type: hero, exp: 0};
+            emit!(world, Hero2Hired {hero_2, player});
+            set!(world, (hero_2));
         } else {
-            let hero = Hero3 {id: player.id, hero_type: hero, exp: 0};
-            set!(world, (hero));
+            let hero_3 = Hero3 {id: player.id, hero_type: hero, exp: 0};
+            emit!(world, Hero3Hired {hero_3, player});
+            set!(world, (hero_3));
         }
     }
 
@@ -188,8 +232,7 @@ mod actions {
             current_dungeon.reset();
         } else {
             player.exp += fight_result.plus_player_xp;
-            // player.add_heroes_exp(fight_result.plus_heroes_xp);
-            add_heroes_exp(world, player.id, fight_result.plus_heroes_xp);
+            add_heroes_exp(world, player, fight_result.plus_heroes_xp);
         }
     }
 
@@ -230,26 +273,29 @@ mod actions {
         guardian_multiplier *heroes_defence*player_multi/10
     }
 
-    fn add_heroes_exp(world: IWorldDispatcher, id: ContractAddress, plus_exp: u32) {
-        let mut hero_1 = get!(world, (id), (Hero1));
-        let mut hero_2 = get!(world, (id), (Hero2));
-        let mut hero_3 = get!(world, (id), (Hero3));
+    fn add_heroes_exp(world: IWorldDispatcher, player: Player, plus_exp: u32) {
+        let mut hero_1 = get!(world, (player.id), (Hero1));
+        let mut hero_2 = get!(world, (player.id), (Hero2));
+        let mut hero_3 = get!(world, (player.id), (Hero3));
 
         if hero_1.hero_type.is_some() {
             hero_1.exp += plus_exp;
+            emit!(world, Hero1ExpIncreased {hero_1, player});
+            set!(world, (hero_1));
         }
 
         if hero_2.hero_type.is_some() {
             hero_2.exp += plus_exp;
+            emit!(world, Hero2ExpIncreased {hero_2, player});
+            set!(world, (hero_2));
+
         }
 
         if hero_3.hero_type.is_some() {
             hero_3.exp += plus_exp;
+            emit!(world, Hero3ExpIncreased {hero_3, player});
+            set!(world, (hero_3));
         }
-
-        set!(world, (hero_1));
-        set!(world, (hero_2));
-        set!(world, (hero_3));
     }
 }
 
@@ -399,6 +445,9 @@ mod tests {
         actions.next_room();
 
         let current_dungeon = get!(world, (player_address), (CurrentDungeon));
+        let hero_1 = get!(world, (player_address), (Hero1));
+        let hero_2 = get!(world, (player_address), (Hero2));
+        let hero_3 = get!(world, (player_address), (Hero3));
         assert(current_dungeon.dungeon_type == DungeonType::BlackTower, 'Wrong Dungeon');
     }
 
