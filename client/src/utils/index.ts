@@ -1,21 +1,55 @@
-import { Direction } from "../dojo/createSystemCalls";
+import { Artifact, HeroType } from "../dojo/types";
+import { Player } from "../generated/graphql";
 
-export function updatePositionWithDirection(direction: Direction, value: { vec: { x: number, y: number } }) {
-    switch (direction) {
-        case Direction.Left:
-            value.vec.x--;
-            break;
-        case Direction.Right:
-            value.vec.x++;
-            break;
-        case Direction.Up:
-            value.vec.y--;
-            break;
-        case Direction.Down:
-            value.vec.y++;
-            break;
-        default:
-            throw new Error("Invalid direction provided");
+export function hireHero(player: Player, pos: number, hero: HeroType): Player {
+    if (pos < 0 || pos > 5) {
+        throw ("wrong position")
+    } else if (pos == 1) {
+        player.pos_1 = {
+            hero_type: hero,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0
+        }
     }
-    return value;
+    //todo
+    return player;
 }
+
+export function defaulPlayer(): Player {
+    return {
+        exp: 0,
+        gold: 100,
+        pos_1: {
+            hero_type: HeroType.None,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0,
+        },
+        pos_2: {
+            hero_type: HeroType.None,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0,
+        },
+        pos_3: {
+            hero_type: HeroType.None,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0,
+        },
+        pos_4: {
+            hero_type: HeroType.None,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0,
+        },
+        pos_5: {
+            hero_type: HeroType.None,
+            item_1: Artifact.None,
+            item_2: Artifact.None,
+            exp: 0,
+        },
+    };
+}
+

@@ -1,9 +1,9 @@
 import { SetupNetworkResult } from "./setupNetwork";
-import { Account } from "starknet";
+import { Account, BigNumberish } from "starknet";
 import { EntityIndex, getComponentValue } from "@latticexyz/recs";
 import { uuid } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
-import { updatePositionWithDirection } from "../utils";
+import { defaulPlayer, hireHero } from "../utils";
 import { getEvents, setComponentsFromEvents } from "@dojoengine/utils";
 import { Artifact, DungeonType, HeroType } from "./types";
 
@@ -21,51 +21,12 @@ export function createSystemCalls(
         const playerId = uuid();
         Player.addOverride(playerId, {
             entity: entityId,
-            value: {
-                exp: 0,
-                gold: 100,
-                in_dungeon: false,
-                pos_1: {
-                    hero_type: HeroType.None,
-                    item_1: Artifact.None,
-                    item_2: Artifact.None,
-                    exp: 0,
-                },
-                pos_2: {
-                    hero_type: HeroType.None,
-                    item_1: Artifact.None,
-                    item_2: Artifact.None,
-                    exp: 0,
-                },
-                pos_3: {
-                    hero_type: HeroType.None,
-                    item_1: Artifact.None,
-                    item_2: Artifact.None,
-                    exp: 0,
-                },
-                pos_4: {
-                    hero_type: HeroType.None,
-                    item_1: Artifact.None,
-                    item_2: Artifact.None,
-                    exp: 0,
-                },
-                pos_5: {
-                    hero_type: HeroType.None,
-                    item_1: Artifact.None,
-                    item_2: Artifact.None,
-                    exp: 0,
-                },
-            },
+            value: defaulPlayer()
         });
 
         const dungeonId = uuid();
         CurrentDungeon.addOverride(dungeonId, {
             entity: entityId,
-            // value: {
-            //     dungeon_type: DungeonType.None,
-            //     current_room: 0,
-            //     squad_health: 0,
-            // },
             value: getComponentValue(CurrentDungeon, entityId)
         });
 
@@ -88,6 +49,94 @@ export function createSystemCalls(
             CurrentDungeon.removeOverride(dungeonId);
         }
     };
+
+    const hire_hero = async (signer: Account, position: number, hero: HeroType) => {
+        const entityId = signer.address.toString() as EntityIndex;
+
+        const playerId = uuid();
+        Player.addOverride(playerId, {
+            entity: entityId,
+            value: hireHero(Player, position, hero)
+        });
+
+        const dungeonId = uuid();
+        CurrentDungeon.addOverride(dungeonId, {
+            entity: entityId,
+            value: getComponentValue(CurrentDungeon, entityId)
+        });
+
+        try {
+            const tx = await execute(signer, "actions", 'hire_hero', [position as BigNumberish, hero]);
+            setComponentsFromEvents(contractComponents,
+                getEvents(
+                    await signer.waitForTransaction(tx.transaction_hash,
+                        { retryInterval: 100 }
+                    )
+                )
+            );
+
+        } catch (e) {
+            console.log(e)
+            Player.removeOverride(playerId);
+            CurrentDungeon.removeOverride(dungeonId);
+        } finally {
+            Player.removeOverride(playerId);
+            CurrentDungeon.removeOverride(dungeonId);
+        }
+    }
+
+    const enter_dungeon = async (signer: Account, dungeon_type: DungeonType, gold: Number) => {
+        try {
+            const tx = await execute(signer, "actions", 'enter_dungeon', [dungeon_type, gold as BigNumberish]);
+            setComponentsFromEvents(contractComponents,
+                getEvents(
+                    await signer.waitForTransaction(tx.transaction_hash,
+                        { retryInterval: 100 }
+                    )
+                )
+            );
+
+        } catch (e) {
+            console.log(e)
+        } finally {
+        }
+    }
+
+    const next_room = async (signer: Account) => {
+        try {
+            const tx = await execute(signer, "actions", 'next_room', []);
+            setComponentsFromEvents(contractComponents,
+                getEvents(
+                    await signer.waitForTransaction(tx.transaction_hash,
+                        { retryInterval: 100 }
+                    )
+                )
+            );
+
+        } catch (e) {
+            console.log(e)
+        } finally {
+        }
+    }
+
+    const leave_dungeon = async (signer: Account) => {
+        try {
+            const tx = await execute(signer, "actions", 'leave_dungeon', []);
+            setComponentsFromEvents(contractComponents,
+                getEvents(
+                    await signer.waitForTransaction(tx.transaction_hash,
+                        { retryInterval: 100 }
+                    )
+                )
+            );
+
+        } catch (e) {
+            console.log(e)
+        } finally {
+        }
+    }
+
+
 
     // const move = async (signer: Account, direction: Direction) => {
     //     const entityId = signer.address.toString() as EntityIndex;
@@ -126,13 +175,10 @@ export function createSystemCalls(
     // };
 
     return {
-        create_player
+        create_player,
+        hire_hero,
+        enter_dungeon,
+        next_room,
+        leave_dungeon,
     };
-}
-
-export enum Direction {
-    Left = 1,
-    Right = 2,
-    Up = 3,
-    Down = 4,
 }

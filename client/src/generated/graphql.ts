@@ -20,7 +20,6 @@ export type Scalars = {
   Cursor: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   Enum: { input: any; output: any; }
-  bool: { input: any; output: any; }
   felt252: { input: any; output: any; }
   u8: { input: any; output: any; }
   u32: { input: any; output: any; }
@@ -189,7 +188,6 @@ export type Player = {
   exp?: Maybe<Scalars['u32']['output']>;
   gold?: Maybe<Scalars['u32']['output']>;
   id?: Maybe<Scalars['ContractAddress']['output']>;
-  in_dungeon?: Maybe<Scalars['bool']['output']>;
   pos_1?: Maybe<Hero>;
   pos_2?: Maybe<Hero>;
   pos_3?: Maybe<Hero>;
@@ -218,7 +216,6 @@ export enum PlayerOrderField {
   Exp = 'EXP',
   Gold = 'GOLD',
   Id = 'ID',
-  InDungeon = 'IN_DUNGEON',
   Pos_1 = 'POS_1',
   Pos_2 = 'POS_2',
   Pos_3 = 'POS_3',
@@ -248,13 +245,6 @@ export type PlayerWhereInput = {
   idLT?: InputMaybe<Scalars['ContractAddress']['input']>;
   idLTE?: InputMaybe<Scalars['ContractAddress']['input']>;
   idNEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
-  in_dungeon?: InputMaybe<Scalars['bool']['input']>;
-  in_dungeonEQ?: InputMaybe<Scalars['bool']['input']>;
-  in_dungeonGT?: InputMaybe<Scalars['bool']['input']>;
-  in_dungeonGTE?: InputMaybe<Scalars['bool']['input']>;
-  in_dungeonLT?: InputMaybe<Scalars['bool']['input']>;
-  in_dungeonLTE?: InputMaybe<Scalars['bool']['input']>;
-  in_dungeonNEQ?: InputMaybe<Scalars['bool']['input']>;
 };
 
 export type Query = {
@@ -447,7 +437,7 @@ export type SystemEdge = {
 export type GetEntitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'CurrentDungeon', dungeon_type?: any | null, current_room?: any | null, squad_health?: any | null } | { __typename: 'Player', exp?: any | null, gold?: any | null, in_dungeon?: any | null, pos_1?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_2?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_3?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_4?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_5?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null } | null> | null } | null } | null> | null } | null };
+export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'CurrentDungeon', dungeon_type?: any | null, current_room?: any | null, squad_health?: any | null } | { __typename: 'Player', exp?: any | null, gold?: any | null, pos_1?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_2?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_3?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_4?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_5?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null } | null> | null } | null } | null> | null } | null };
 
 
 export const GetEntitiesDocument = gql`
@@ -461,7 +451,6 @@ export const GetEntitiesDocument = gql`
           ... on Player {
             exp
             gold
-            in_dungeon
             pos_1 {
               hero_type
               item_1

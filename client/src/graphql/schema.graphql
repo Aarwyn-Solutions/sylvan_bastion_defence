@@ -8,7 +8,6 @@ query getEntities {
           ... on Player {
             exp
             gold
-            in_dungeon
             pos_1 {
               hero_type
               item_1

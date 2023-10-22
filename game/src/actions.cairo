@@ -27,7 +27,9 @@ mod actions {
     #[derive(Drop, starknet::Event)]
     enum Event {
         PlayerCreated: PlayerCreated,
+        PlayerHiredHero:PlayerHiredHero,
         DungeonEntered: DungeonEntered,
+        DungeonNextRoom: DungeonNextRoom,
         DungeonLeft: DungeonLeft,
     }
 
@@ -37,15 +39,25 @@ mod actions {
     }
 
     #[derive(Drop, starknet::Event)]
+    struct PlayerHiredHero {
+        player: Player
+    }
+
+    #[derive(Drop, starknet::Event)]
     struct DungeonEntered {
-        id: ContractAddress,
-        dungeon_type: DungeonType,
+        player: Player,
+        current_dungeon: CurrentDungeon
+    }
+
+     #[derive(Drop, starknet::Event)]
+    struct DungeonNextRoom {
+        player: Player,
+        current_dungeon: CurrentDungeon
     }
 
     #[derive(Drop, starknet::Event)]
     struct DungeonLeft {
-        id: ContractAddress,
-        dungeon_type: DungeonType,
+        current_dungeon: CurrentDungeon
     }
 
 
@@ -61,7 +73,6 @@ mod actions {
                 id: player_address,
                 exp: 0_u32,
                 gold: 10000_u32,
-                in_dungeon: false,
                 pos_1: HeroTrait::default(),
                 pos_2: HeroTrait::default(),
                 pos_3: HeroTrait::default(),
@@ -82,6 +93,7 @@ mod actions {
             let mut player = get!(world, (id), (Player));
             add_hero_on_pos(ref player, position, hero);
             set!(world, (player));
+            emit!(world, PlayerHiredHero {player});
         }
 
         fn enter_dungeon(self: @ContractState, dungeon_type: DungeonType, gold: u32) {
@@ -107,6 +119,7 @@ mod actions {
 
             set!(world, (player));
             set!(world, (current_dungeon));
+            emit!(world, DungeonEntered {player, current_dungeon})
         }
 
         fn next_room(self: @ContractState) {
@@ -132,6 +145,7 @@ mod actions {
 
             set!(world, (player));
             set!(world, (current_dungeon));
+            emit!(world, DungeonNextRoom {player, current_dungeon})
         }
 
         fn leave_dungeon(self: @ContractState) {
@@ -141,6 +155,7 @@ mod actions {
             assert(current_dungeon.dungeon_type.is_some(), 'dungeon is not in progress');
             do_leave_dungeon(world, ref current_dungeon);
             set!(world, (current_dungeon));
+            emit!(world, DungeonLeft {current_dungeon})
         }
     }
 
@@ -185,9 +200,6 @@ mod actions {
     }
 
     fn do_leave_dungeon(world: IWorldDispatcher, ref current_dungeon: CurrentDungeon) {
-        let dungeon_type = current_dungeon.dungeon_type;
-        let id = get_caller_address();
-        emit!(world, DungeonLeft { id, dungeon_type });
         current_dungeon.reset();
     }
 }
@@ -232,7 +244,6 @@ mod tests {
         set_contract_address(player_address);
         actions.create_player();
         let player = get!(world, (player_address), (Player));
-        assert(!player.in_dungeon, '!player.in_dungeon');
         assert(player.pos_1.hero_type == HeroType::None, 'pos_1 == Hero::None');
         assert(player.pos_2.hero_type == HeroType::None, 'pos_2 == Hero::None');
         assert(player.pos_3.hero_type == HeroType::None, 'pos_3 == Hero::None');

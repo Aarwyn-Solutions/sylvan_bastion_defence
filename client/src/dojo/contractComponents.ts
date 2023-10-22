@@ -11,7 +11,6 @@ export function defineContractComponents(world: World) {
         {
           exp: RecsType.Number,
           gold: RecsType.Number,
-          in_dungeon: RecsType.Boolean,
           pos_1: RecsType.Number,
           pos_2: RecsType.Number,
           pos_3: RecsType.Number,
@@ -21,7 +20,7 @@ export function defineContractComponents(world: World) {
         {
           metadata: {
             name: name,
-            types: ["u32","u32","bool","Hero","Hero","Hero","Hero","Hero"],
+            types: ["u32","u32","Hero","Hero","Hero","Hero","Hero"],
           },
         }
       );

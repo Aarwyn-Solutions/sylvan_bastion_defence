@@ -11,7 +11,6 @@ struct Player {
     id: ContractAddress,
     exp: u32,
     gold: u32,
-    in_dungeon: bool,
     pos_1: Hero,
     pos_2: Hero,
     pos_3: Hero,
