@@ -2,9 +2,14 @@ import { useDojo } from './DojoContext';
 import { Direction, } from './dojo/createSystemCalls'
 import { useComponentValue } from "@latticexyz/react";
 import { Entity } from '@latticexyz/recs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { setComponentsFromGraphQLEntities } from '@dojoengine/utils';
 import { DungeonType, HeroType } from './dojo/types';
+
+import Map from "./components/Map";
+import Menu from "./components/Menu";
+import { DungeonInfo } from "./components/Dungeon";
+import { BastionInfo } from "./components/Bastion";
 
 function App() {
   const {
@@ -47,10 +52,22 @@ function App() {
     fetchData();
   }, [entityId, contractComponents]);
 
+  const mapImageUrl = "./src/assets/game/map.jpg";
+  const [selectedBlock, setSelectedBlock] = useState<BastionInfo | DungeonInfo | null>(null);
 
-  return (
-    <>
-      <button onClick={create}>{isDeploying ? "deploying burner" : "create burner"}</button>
+  const appStyles: React.CSSProperties = {
+    display: "flex",
+    flexWrap: "wrap",
+    width: window.innerWidth,
+    height: window.innerHeight,
+  };
+
+  const handleBlockClick = (info: BastionInfo | DungeonInfo) => {
+    setSelectedBlock(info);
+  };
+
+  const actions = (
+    <><button onClick={create}>{isDeploying ? "deploying burner" : "create burner"}</button>
       <div className="card">
         select signer:{" "}
         <select onChange={e => select(e.target.value)}>
@@ -70,19 +87,24 @@ function App() {
         <div>Player hero5: {player ? (player.pos_5 ? `${player.pos_5['hero_type']}` : 'Need to hire hero') : 'Need to create_player'}</div>
         <button onClick={() => hire_hero(account, 1, HeroType.Archer)}>Hire hero</button>
         <button onClick={() => enter_dungeon(account, DungeonType.BlackTower, 100)}>Enter dungeon</button>
-        {(dungeon || dungeon.dungeon_type == DungeonType.None) && (<div>
+        {dungeon && (<div>
           <button onClick={() => next_room(account)}>Next room</button>
           <button onClick={() => leave_dungeon(account)}>Leave</button>
 
         </div>)}
         <div>Current dungeon: {dungeon ? `${dungeon['dungeon_type']}, ${dungeon['current_room']}` : 'Need to enter dungeon'}</div>
       </div>
-      {/* <div className="card">
-        <button onClick={() => move(account, Direction.Up)}>Move Up</button> <br />
-        <button onClick={() => move(account, Direction.Left)}>Move Left</button>
-        <button onClick={() => move(account, Direction.Right)}>Move Right</button> <br />
-        <button onClick={() => move(account, Direction.Down)}>Move Down</button>
-      </div> */}
+    </>
+  )
+
+  return (
+    <>
+      <div className="container" style={appStyles}>
+        <Map imageUrl={mapImageUrl} onBlockClick={handleBlockClick} />
+        <Menu selectedBlock={selectedBlock} inner={actions} />
+      </div>
+
+
     </>
   );
 }
