@@ -10,6 +10,7 @@ import Map from "./components/Map";
 import Menu from "./components/Menu";
 import { DungeonInfo } from "./components/Dungeon";
 import { BastionInfo } from "./components/Bastion";
+import Heroes from './components/Heroes';
 
 function App() {
   const {
@@ -30,9 +31,15 @@ function App() {
   // get current component values
   const player = useComponentValue(components.Player, entityId as Entity);
   const dungeon = useComponentValue(components.CurrentDungeon, entityId as Entity);
+  const hero1 = useComponentValue(components.Hero1, entityId as Entity);
+  const hero2 = useComponentValue(components.Hero2, entityId as Entity);
+  const hero3 = useComponentValue(components.Hero3, entityId as Entity);
 
   console.log("player", player);
   console.log("dungeon", dungeon);
+  console.log("hero1", hero1);
+  console.log("hero2", hero2);
+  console.log("hero3", hero3);
 
   // use graphql to current state data
   useEffect(() => {
@@ -80,27 +87,28 @@ function App() {
         <button onClick={() => create_player(account)}>Create player</button>
         <div>Player expirience: {player ? `${player['exp']}` : 'Need to create_player'}</div>
         <div>Player gold: {player ? `${player['gold']}` : 'Need to create_player'}</div>
-        <div>Player hero1: {player ? (player.pos_1 ? `${player.pos_1['hero_type']}` : 'Need to hire hero') : 'Need to create_player'}</div>
-        <div>Player hero2: {player ? (player.pos_2 ? `${player.pos_2['hero_type']}` : 'Need to hire hero') : 'Need to create_player'}</div>
-        <div>Player hero3: {player ? (player.pos_3 ? `${player.pos_3['hero_type']}` : 'Need to hire hero') : 'Need to create_player'}</div>
-        <div>Player hero4: {player ? (player.pos_4 ? `${player.pos_4['hero_type']}` : 'Need to hire hero') : 'Need to create_player'}</div>
-        <div>Player hero5: {player ? (player.pos_5 ? `${player.pos_5['hero_type']}` : 'Need to hire hero') : 'Need to create_player'}</div>
+        <Heroes hero1={hero1} hero2={hero2} hero3={hero3} signer={account} hire={hire_hero} />
+        <div>Player hero1: {player ? (hero1 ? `${hero1['hero_type']} ${hero1['exp']}` : 'Need to hire hero') : 'Need to create_player'}</div>
+        <div>Player hero2: {player ? (hero2 ? `${hero2['hero_type']} ${hero2['exp']}` : 'Need to hire hero') : 'Need to create_player'}</div>
+        <div>Player hero3: {player ? (hero3 ? `${hero3['hero_type']} ${hero3['exp']}` : 'Need to hire hero') : 'Need to create_player'}</div>
         <button onClick={() => hire_hero(account, 1, HeroType.Archer)}>Hire hero</button>
-        <button onClick={() => enter_dungeon(account, DungeonType.BlackTower, 100)}>Enter dungeon</button>
-        {dungeon && (<div>
-          <button onClick={() => next_room(account)}>Next room</button>
-          <button onClick={() => leave_dungeon(account)}>Leave</button>
 
-        </div>)}
         <div>Current dungeon: {dungeon ? `${dungeon['dungeon_type']}, ${dungeon['current_room']}` : 'Need to enter dungeon'}</div>
       </div>
     </>
   )
 
+  const dungeonActions = (<><button onClick={() => enter_dungeon(account, DungeonType.BlackTower, 100)}>Enter dungeon</button>
+    {(<div>
+      <button onClick={() => next_room(account)}>Next room</button>
+      <button onClick={() => leave_dungeon(account)}>Leave</button>
+
+    </div>)}</>)
+
   return (
     <>
       <div className="container" style={appStyles}>
-        <Map imageUrl={mapImageUrl} onBlockClick={handleBlockClick} />
+        <Map imageUrl={mapImageUrl} onBlockClick={handleBlockClick} dungeon={dungeonActions} />
         <Menu selectedBlock={selectedBlock} inner={actions} />
       </div>
 

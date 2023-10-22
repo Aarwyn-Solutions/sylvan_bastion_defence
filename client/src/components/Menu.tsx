@@ -44,9 +44,9 @@ const Menu: React.FC<MenuProps> = ({ selectedBlock, inner }) => {
     <div style={menuContainerStyle}>
       {selectedBlock ? (
         <div>
-          <p>Name: {selectedBlock.name}</p>
+          <p>{selectedBlock.name}</p>
           {selectedBlock.image ? <img src={selectedBlock.image} style={menuImageStyles} /> : <></>}
-          <p>Description: {selectedBlock.description}</p>
+          <p>{selectedBlock.description}</p>
         </div>
       ) : (
         <p>Select a block to see details</p>

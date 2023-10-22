@@ -128,12 +128,151 @@ export type EventEdge = {
   node?: Maybe<Event>;
 };
 
-export type Hero = {
-  __typename?: 'Hero';
+export type Hero1 = {
+  __typename?: 'Hero1';
+  entity?: Maybe<Entity>;
   exp?: Maybe<Scalars['u32']['output']>;
   hero_type?: Maybe<Scalars['Enum']['output']>;
-  item_1?: Maybe<Scalars['Enum']['output']>;
-  item_2?: Maybe<Scalars['Enum']['output']>;
+  id?: Maybe<Scalars['ContractAddress']['output']>;
+};
+
+export type Hero1Connection = {
+  __typename?: 'Hero1Connection';
+  edges?: Maybe<Array<Maybe<Hero1Edge>>>;
+  total_count: Scalars['Int']['output'];
+};
+
+export type Hero1Edge = {
+  __typename?: 'Hero1Edge';
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  node?: Maybe<Hero1>;
+};
+
+export type Hero1Order = {
+  direction: OrderDirection;
+  field: Hero1OrderField;
+};
+
+export enum Hero1OrderField {
+  Exp = 'EXP',
+  HeroType = 'HERO_TYPE',
+  Id = 'ID'
+}
+
+export type Hero1WhereInput = {
+  exp?: InputMaybe<Scalars['u32']['input']>;
+  expEQ?: InputMaybe<Scalars['u32']['input']>;
+  expGT?: InputMaybe<Scalars['u32']['input']>;
+  expGTE?: InputMaybe<Scalars['u32']['input']>;
+  expLT?: InputMaybe<Scalars['u32']['input']>;
+  expLTE?: InputMaybe<Scalars['u32']['input']>;
+  expNEQ?: InputMaybe<Scalars['u32']['input']>;
+  hero_type?: InputMaybe<Scalars['Enum']['input']>;
+  id?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idNEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+};
+
+export type Hero2 = {
+  __typename?: 'Hero2';
+  entity?: Maybe<Entity>;
+  exp?: Maybe<Scalars['u32']['output']>;
+  hero_type?: Maybe<Scalars['Enum']['output']>;
+  id?: Maybe<Scalars['ContractAddress']['output']>;
+};
+
+export type Hero2Connection = {
+  __typename?: 'Hero2Connection';
+  edges?: Maybe<Array<Maybe<Hero2Edge>>>;
+  total_count: Scalars['Int']['output'];
+};
+
+export type Hero2Edge = {
+  __typename?: 'Hero2Edge';
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  node?: Maybe<Hero2>;
+};
+
+export type Hero2Order = {
+  direction: OrderDirection;
+  field: Hero2OrderField;
+};
+
+export enum Hero2OrderField {
+  Exp = 'EXP',
+  HeroType = 'HERO_TYPE',
+  Id = 'ID'
+}
+
+export type Hero2WhereInput = {
+  exp?: InputMaybe<Scalars['u32']['input']>;
+  expEQ?: InputMaybe<Scalars['u32']['input']>;
+  expGT?: InputMaybe<Scalars['u32']['input']>;
+  expGTE?: InputMaybe<Scalars['u32']['input']>;
+  expLT?: InputMaybe<Scalars['u32']['input']>;
+  expLTE?: InputMaybe<Scalars['u32']['input']>;
+  expNEQ?: InputMaybe<Scalars['u32']['input']>;
+  hero_type?: InputMaybe<Scalars['Enum']['input']>;
+  id?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idNEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+};
+
+export type Hero3 = {
+  __typename?: 'Hero3';
+  entity?: Maybe<Entity>;
+  exp?: Maybe<Scalars['u32']['output']>;
+  hero_type?: Maybe<Scalars['Enum']['output']>;
+  id?: Maybe<Scalars['ContractAddress']['output']>;
+};
+
+export type Hero3Connection = {
+  __typename?: 'Hero3Connection';
+  edges?: Maybe<Array<Maybe<Hero3Edge>>>;
+  total_count: Scalars['Int']['output'];
+};
+
+export type Hero3Edge = {
+  __typename?: 'Hero3Edge';
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  node?: Maybe<Hero3>;
+};
+
+export type Hero3Order = {
+  direction: OrderDirection;
+  field: Hero3OrderField;
+};
+
+export enum Hero3OrderField {
+  Exp = 'EXP',
+  HeroType = 'HERO_TYPE',
+  Id = 'ID'
+}
+
+export type Hero3WhereInput = {
+  exp?: InputMaybe<Scalars['u32']['input']>;
+  expEQ?: InputMaybe<Scalars['u32']['input']>;
+  expGT?: InputMaybe<Scalars['u32']['input']>;
+  expGTE?: InputMaybe<Scalars['u32']['input']>;
+  expLT?: InputMaybe<Scalars['u32']['input']>;
+  expLTE?: InputMaybe<Scalars['u32']['input']>;
+  expNEQ?: InputMaybe<Scalars['u32']['input']>;
+  hero_type?: InputMaybe<Scalars['Enum']['input']>;
+  id?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idGTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLT?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idLTE?: InputMaybe<Scalars['ContractAddress']['input']>;
+  idNEQ?: InputMaybe<Scalars['ContractAddress']['input']>;
 };
 
 export type Metadata = {
@@ -175,7 +314,7 @@ export type ModelEdge = {
   node?: Maybe<Model>;
 };
 
-export type ModelUnion = CurrentDungeon | Player;
+export type ModelUnion = CurrentDungeon | Hero1 | Hero2 | Hero3 | Player;
 
 export enum OrderDirection {
   Asc = 'ASC',
@@ -188,11 +327,6 @@ export type Player = {
   exp?: Maybe<Scalars['u32']['output']>;
   gold?: Maybe<Scalars['u32']['output']>;
   id?: Maybe<Scalars['ContractAddress']['output']>;
-  pos_1?: Maybe<Hero>;
-  pos_2?: Maybe<Hero>;
-  pos_3?: Maybe<Hero>;
-  pos_4?: Maybe<Hero>;
-  pos_5?: Maybe<Hero>;
 };
 
 export type PlayerConnection = {
@@ -215,12 +349,7 @@ export type PlayerOrder = {
 export enum PlayerOrderField {
   Exp = 'EXP',
   Gold = 'GOLD',
-  Id = 'ID',
-  Pos_1 = 'POS_1',
-  Pos_2 = 'POS_2',
-  Pos_3 = 'POS_3',
-  Pos_4 = 'POS_4',
-  Pos_5 = 'POS_5'
+  Id = 'ID'
 }
 
 export type PlayerWhereInput = {
@@ -253,6 +382,9 @@ export type Query = {
   entities?: Maybe<EntityConnection>;
   entity: Entity;
   events?: Maybe<EventConnection>;
+  hero1Models?: Maybe<Hero1Connection>;
+  hero2Models?: Maybe<Hero2Connection>;
+  hero3Models?: Maybe<Hero3Connection>;
   metadata: Metadata;
   metadatas?: Maybe<MetadataConnection>;
   model: Model;
@@ -300,6 +432,42 @@ export type QueryEventsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryHero1ModelsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<Hero1Order>;
+  where?: InputMaybe<Hero1WhereInput>;
+};
+
+
+export type QueryHero2ModelsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<Hero2Order>;
+  where?: InputMaybe<Hero2WhereInput>;
+};
+
+
+export type QueryHero3ModelsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<Hero3Order>;
+  where?: InputMaybe<Hero3WhereInput>;
 };
 
 
@@ -437,7 +605,7 @@ export type SystemEdge = {
 export type GetEntitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'CurrentDungeon', dungeon_type?: any | null, current_room?: any | null, squad_health?: any | null } | { __typename: 'Player', exp?: any | null, gold?: any | null, pos_1?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_2?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_3?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_4?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null, pos_5?: { __typename?: 'Hero', hero_type?: any | null, item_1?: any | null, item_2?: any | null, exp?: any | null } | null } | null> | null } | null } | null> | null } | null };
+export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'CurrentDungeon', dungeon_type?: any | null, current_room?: any | null, squad_health?: any | null } | { __typename: 'Hero1', hero_type?: any | null, exp?: any | null } | { __typename: 'Hero2', hero_type?: any | null, exp?: any | null } | { __typename: 'Hero3', hero_type?: any | null, exp?: any | null } | { __typename: 'Player', exp?: any | null, gold?: any | null } | null> | null } | null } | null> | null } | null };
 
 
 export const GetEntitiesDocument = gql`
@@ -451,41 +619,23 @@ export const GetEntitiesDocument = gql`
           ... on Player {
             exp
             gold
-            pos_1 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
-            pos_2 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
-            pos_3 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
-            pos_4 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
-            pos_5 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
           }
           ... on CurrentDungeon {
             dungeon_type
             current_room
             squad_health
+          }
+          ... on Hero1 {
+            hero_type
+            exp
+          }
+          ... on Hero2 {
+            hero_type
+            exp
+          }
+          ... on Hero3 {
+            hero_type
+            exp
           }
         }
       }

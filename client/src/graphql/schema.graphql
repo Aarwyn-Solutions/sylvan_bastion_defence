@@ -8,41 +8,27 @@ query getEntities {
           ... on Player {
             exp
             gold
-            pos_1 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
-            pos_2 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
-            pos_3 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
-            pos_4 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
-            pos_5 {
-              hero_type
-              item_1
-              item_2
-              exp
-            }
+            
           }
           ... on CurrentDungeon {
               dungeon_type 
               current_room
               squad_health
+          }
+
+          ... on Hero1 {
+            hero_type
+            exp   
+          }
+
+           ... on Hero2 {
+            hero_type
+            exp   
+          }
+
+           ... on Hero3 {
+            hero_type
+            exp   
           }
         }
       }

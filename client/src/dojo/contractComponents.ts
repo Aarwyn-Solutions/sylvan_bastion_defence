@@ -11,41 +11,59 @@ export function defineContractComponents(world: World) {
         {
           exp: RecsType.Number,
           gold: RecsType.Number,
-          pos_1: {
-            hero_type: RecsType.Number,
-            item_1: RecsType.Number,
-            item_2: RecsType.Number,
-            exp: RecsType.Number,
-          },
-          pos_2: {
-            hero_type: RecsType.Number,
-            item_1: RecsType.Number,
-            item_2: RecsType.Number,
-            exp: RecsType.Number,
-          },
-          pos_3: {
-            hero_type: RecsType.Number,
-            item_1: RecsType.Number,
-            item_2: RecsType.Number,
-            exp: RecsType.Number,
-          },
-          pos_4: {
-            hero_type: RecsType.Number,
-            item_1: RecsType.Number,
-            item_2: RecsType.Number,
-            exp: RecsType.Number,
-          },
-          pos_5: {
-            hero_type: RecsType.Number,
-            item_1: RecsType.Number,
-            item_2: RecsType.Number,
-            exp: RecsType.Number,
-          },
         },
         {
           metadata: {
             name: name,
-            types: ["u32", "u32", "Hero", "Hero", "Hero", "Hero", "Hero"],
+            types: ["u32","u32"],
+          },
+        }
+      );
+    })(),
+    Hero1: (() => {
+      const name = "Hero1";
+      return defineComponent(
+        world,
+        {
+          hero_type: RecsType.Number,
+          exp: RecsType.Number,
+        },
+        {
+          metadata: {
+            name: name,
+            types: ["HeroType","u32"],
+          },
+        }
+      );
+    })(),
+    Hero2: (() => {
+      const name = "Hero2";
+      return defineComponent(
+        world,
+        {
+          hero_type: RecsType.Number,
+          exp: RecsType.Number,
+        },
+        {
+          metadata: {
+            name: name,
+            types: ["HeroType","u32"],
+          },
+        }
+      );
+    })(),
+    Hero3: (() => {
+      const name = "Hero3";
+      return defineComponent(
+        world,
+        {
+          hero_type: RecsType.Number,
+          exp: RecsType.Number,
+        },
+        {
+          metadata: {
+            name: name,
+            types: ["HeroType","u32"],
           },
         }
       );
@@ -62,7 +80,7 @@ export function defineContractComponents(world: World) {
         {
           metadata: {
             name: name,
-            types: ["DungeonType", "u8", "u32"],
+            types: ["DungeonType","u8","u32"],
           },
         }
       );

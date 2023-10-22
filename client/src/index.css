@@ -118,6 +118,7 @@ canvas {
   position: absolute;
   left: 50%;
   top: 70%;
+  /* opacity: 70%; */
 }
 
 #bastion-block-2 {
@@ -130,6 +131,7 @@ canvas {
   position: absolute;
   left: 30%;
   top: 50%;
+  /* opacity: 70%; */
 }
 
 #dungeon-block-1 {
@@ -156,12 +158,14 @@ canvas {
   position: absolute;
   left: 25%;
   top: 66%;
+  /* opacity: 50%; */
 }
 
 #dungeon-block-5 {
   position: absolute;
   left: 70%;
   top: 82%;
+  /* opacity: 60%; */
 }
 
 #dungeon-block-6 {

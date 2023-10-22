@@ -9,5 +9,8 @@ export function createClientComponents({ contractComponents }: SetupNetworkResul
         ...contractComponents,
         Player: overridableComponent(contractComponents.Player),
         CurrentDungeon: overridableComponent(contractComponents.CurrentDungeon),
+        Hero1: overridableComponent(contractComponents.Hero1),
+        Hero2: overridableComponent(contractComponents.Hero2),
+        Hero3: overridableComponent(contractComponents.Hero3),
     };
 }

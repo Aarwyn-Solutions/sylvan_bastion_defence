@@ -1,82 +1,17 @@
-import { Artifact, HeroType } from "../dojo/types";
+import { HeroType } from "../dojo/types";
 import { Player } from "../generated/graphql";
 
-export function hireHero(player: Player, pos: number, hero: HeroType): Player {
-    if (pos < 0 || pos > 5) {
-        throw ("wrong position")
-    } else if (pos == 1) {
-        player.pos_1 = {
-            hero_type: hero,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0
-        }
-    } else if (pos == 2) {
-        player.pos_2 = {
-            hero_type: hero,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0
-        }
-    } else if (pos == 3) {
-        player.pos_3 = {
-            hero_type: hero,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0
-        }
-    } else if (pos == 4) {
-        player.pos_4 = {
-            hero_type: hero,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0
-        }
-    } else if (pos == 5) {
-        player.pos_5 = {
-            hero_type: hero,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0
-        }
-    }
-    return player;
+export function defaultHero(hero: HeroType) {
+    return {
+        hero_type: hero,
+        exp: 0
+    };
 }
 
 export function defaulPlayer(): Player {
     return {
         exp: 0,
         gold: 100,
-        pos_1: {
-            hero_type: HeroType.None,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0,
-        },
-        pos_2: {
-            hero_type: HeroType.None,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0,
-        },
-        pos_3: {
-            hero_type: HeroType.None,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0,
-        },
-        pos_4: {
-            hero_type: HeroType.None,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0,
-        },
-        pos_5: {
-            hero_type: HeroType.None,
-            item_1: Artifact.None,
-            item_2: Artifact.None,
-            exp: 0,
-        },
     };
 }
 
