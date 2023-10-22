@@ -87,18 +87,19 @@ mod actions {
 
             // Get the address of the current caller, possibly the player's address.
             let id = get_caller_address();
+            let mut current_dungeon = get!(world, (id), (CurrentDungeon));
 
             assert(dungeon_type.is_some(), 'wrong dungeon');
 
             let mut player = get!(world, (id), (Player));
             assert(player.gold >= gold, 'not enough gold');
             player.gold -= gold;
-
-            let mut current_dungeon = get!(world, (id), (CurrentDungeon));
+   
             current_dungeon.squad_health = gold*100;
             current_dungeon.current_room = 1;
 
             assert(!current_dungeon.dungeon_type.is_some(), 'another dungeon is in progress');
+            current_dungeon.dungeon_type = dungeon_type;
 
             do_fight(ref player, ref current_dungeon, world);
 
@@ -112,6 +113,9 @@ mod actions {
 
             let mut player = get!(world, (id), (Player));
             let mut current_dungeon = get!(world, (id), (CurrentDungeon));
+
+            assert(current_dungeon.dungeon_type.is_some(), 'dungeon is not in progress');
+            assert(current_dungeon.current_room >= 1, 'dungeon is not in progress');
             current_dungeon.current_room += 1;
 
             do_fight(ref player, ref current_dungeon, world);
@@ -134,6 +138,7 @@ mod actions {
             let mut current_dungeon = get!(world, (id), (CurrentDungeon));
             assert(current_dungeon.dungeon_type.is_some(), 'dungeon is not in progress');
             do_leave_dungeon(world, ref current_dungeon);
+            set!(world, (current_dungeon));
         }
     }
 
@@ -188,7 +193,8 @@ mod actions {
 #[cfg(test)]
 mod tests {
     use starknet::class_hash::Felt252TryIntoClassHash;
-     use starknet::testing::set_contract_address;
+    use starknet::testing::set_contract_address;
+    use core::debug::PrintTrait;
 
     // import world dispatcher
     use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
@@ -197,7 +203,7 @@ mod tests {
     use dojo::test_utils::{spawn_test_world, deploy_contract};
 
     use super::{actions,IActions, IActionsDispatcher, IActionsDispatcherTrait};
-    use sylvan_bastion_defence::models::{Player, player,  Hero, HeroType, HeroTrait, Artifact, dungeon::{DungeonType, CurrentDungeon, current_dungeon},};
+    use sylvan_bastion_defence::models::{Player, PlayerTrait, player,  Hero, HeroType, HeroTrait, Artifact, dungeon::{DungeonType, CurrentDungeon, current_dungeon},};
 
     fn init() -> IWorldDispatcher {
         // models
@@ -306,6 +312,10 @@ mod tests {
         set_contract_address(player_address);
         actions.create_player();
 
+        let player = get!(world, (player_address), (Player));
+        let current_dungeon = get!(world, (player_address), (CurrentDungeon));
+        current_dungeon.dungeon_type.print();
+
         // hire a party
         actions.hire_hero(1, HeroType::Archer);
         actions.hire_hero(2, HeroType::Druid);
@@ -313,8 +323,21 @@ mod tests {
         actions.hire_hero(4, HeroType::Knight);
         actions.hire_hero(5, HeroType::Vendigo);
 
-        actions.enter_dungeon(DungeonType::GoblinCamp, 5000);
+        actions.enter_dungeon(DungeonType::BlackTower, 100);
+
+        let player = get!(world, (player_address), (Player));
+        let current_dungeon = get!(world, (player_address), (CurrentDungeon));
+        assert(current_dungeon.dungeon_type == DungeonType::BlackTower, 'Wrong Dungeon');
+
         actions.next_room();
+        let current_dungeon = get!(world, (player_address), (CurrentDungeon));
+        assert(current_dungeon.dungeon_type == DungeonType::BlackTower, 'Wrong Dungeon');
+
+
+        actions.next_room();
+
+        let current_dungeon = get!(world, (player_address), (CurrentDungeon));
+        assert(current_dungeon.dungeon_type == DungeonType::BlackTower, 'Wrong Dungeon');
     }
 
     #[test]
@@ -339,7 +362,13 @@ mod tests {
         actions.hire_hero(5, HeroType::Vendigo);
 
         actions.enter_dungeon(DungeonType::BlackTower, 5000);
+        let current_dungeon = get!(world, (player_address), (CurrentDungeon));
+        assert(current_dungeon.dungeon_type == DungeonType::BlackTower, 'Wrong Dungeon');
         actions.next_room();
+        let current_dungeon = get!(world, (player_address), (CurrentDungeon));
+        assert(current_dungeon.dungeon_type == DungeonType::BlackTower, 'Wrong Dungeon');
         actions.leave_dungeon();
+        let current_dungeon = get!(world, (player_address), (CurrentDungeon));
+        assert(current_dungeon.dungeon_type == DungeonType::None, 'Wrong Dungeon');
     }
 }

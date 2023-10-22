@@ -5,7 +5,7 @@ use dojo::database::schema::{
     Enum, Member, Ty, Struct, SchemaIntrospection, serialize_member, serialize_member_type
 };
 
-#[derive(Model, Copy, Drop, Serde)]
+#[derive(Model, Copy, Drop, Serde, Print)]
 struct Player {
     #[key]
     id: ContractAddress,
@@ -96,7 +96,7 @@ impl PlayerTraitImpl of PlayerTrait {
     }
 }
 
-#[derive(Copy, Drop, Serde, Introspect)]
+#[derive(Copy, Drop, Serde, Introspect, Print)]
 struct Hero {
     hero_type: HeroType,
     item_1: Artifact,
@@ -197,6 +197,21 @@ enum HeroType {
     Guardian,
 }
 
+impl HeroTypePrint of PrintTrait<HeroType> {
+    fn print(self: HeroType) {
+        match self {
+            HeroType::None => 'None'.print(),
+            HeroType::Archer => 'Archer'.print(),
+            HeroType::Shaman => 'Shaman'.print(),
+            HeroType::Mage => 'Mage'.print(),
+            HeroType::Knight =>  'Knight'.print(),
+            HeroType::Druid => 'Druid'.print(),
+            HeroType::Vendigo => 'Vendigo'.print(),
+            HeroType::Guardian => 'Guardian'.print(),
+        }
+    }
+}
+
 #[inline]
 fn is_shaman(self: @HeroType) -> bool {
     match self {
@@ -247,6 +262,17 @@ enum Artifact {
     WoodenShield,
 }
 
+impl ArtifactPrint of PrintTrait<Artifact> {
+    fn print(self: Artifact) {
+        match self {
+            Artifact::None => 'None'.print(),
+            Artifact::WoodenBow => 'WoodenBow'.print(),
+            Artifact::ShordSword => 'ShordSword'.print(),
+            Artifact::WoodenShield => 'WoodenShield'.print(),
+        }
+    }
+}
+
 mod dungeon {
     use array::ArrayTrait;
     use core::debug::PrintTrait;
@@ -255,7 +281,7 @@ mod dungeon {
         Enum, Member, Ty, Struct, SchemaIntrospection, serialize_member, serialize_member_type
     };
 
-    #[derive(Model, Copy, Drop, Serde)]
+    #[derive(Model, Copy, Drop, Serde, Print)]
     struct CurrentDungeon {
         #[key]
         id: ContractAddress,
@@ -277,13 +303,25 @@ mod dungeon {
         }
     }
 
-    #[derive(Copy, Drop, Serde, Introspect)]
+    #[derive(Copy, Drop, Serde, Introspect, PartialEq)]
     enum DungeonType {
         None,
         GoblinCamp,
         WitchTown,
         BlackTower,
     }
+
+    impl DungeonTypePrint of PrintTrait<DungeonType> {
+    fn print(self: DungeonType) {
+        match self {
+                DungeonType::None => 'None'.print(),
+                DungeonType::GoblinCamp => 'GoblinCamp'.print(),
+                DungeonType::WitchTown => 'WitchTown'.print(),
+                DungeonType::BlackTower => 'BlackTower'.print(),
+            }
+        }
+    }
+
 
     trait DungeonTypeTrait {
         fn dungeon_room_count(self: DungeonType) -> u8;
@@ -320,7 +358,7 @@ mod dungeon {
                 DungeonType::None => (0, 0),
                 DungeonType::GoblinCamp => (0, 10),
                 DungeonType::WitchTown => (15, 30),
-                DungeonType::BlackTower => (20, 40),
+                DungeonType::BlackTower => (10, 40),
             }
         }
 
