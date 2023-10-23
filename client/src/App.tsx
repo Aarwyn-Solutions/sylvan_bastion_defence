@@ -84,16 +84,16 @@ function App() {
         </select>
       </div>
       <div className="card">
-        <button onClick={() => create_player(account)}>Create player</button>
+        {!player && <button onClick={() => create_player(account)}>Create player</button>}
         <div>Player expirience: {player ? `${player['exp']}` : 'Need to create_player'}</div>
         <div>Player gold: {player ? `${player['gold']}` : 'Need to create_player'}</div>
         <Heroes hero1={hero1} hero2={hero2} hero3={hero3} signer={account} hire={hire_hero} />
-        <div>Player hero1: {player ? (hero1 ? `${hero1['hero_type']} ${hero1['exp']}` : 'Need to hire hero') : 'Need to create_player'}</div>
+        {/* <div>Player hero1: {player ? (hero1 ? `${hero1['hero_type']} ${hero1['exp']}` : 'Need to hire hero') : 'Need to create_player'}</div>
         <div>Player hero2: {player ? (hero2 ? `${hero2['hero_type']} ${hero2['exp']}` : 'Need to hire hero') : 'Need to create_player'}</div>
         <div>Player hero3: {player ? (hero3 ? `${hero3['hero_type']} ${hero3['exp']}` : 'Need to hire hero') : 'Need to create_player'}</div>
-        <button onClick={() => hire_hero(account, 1, HeroType.Archer)}>Hire hero</button>
+        <button onClick={() => hire_hero(account, 1, HeroType.Archer)}>Hire hero</button> */}
 
-        <div>Current dungeon: {dungeon ? `${dungeon['dungeon_type']}, ${dungeon['current_room']}` : 'Need to enter dungeon'}</div>
+        <div>Current dungeon: {dungeon ? `${dungeon['dungeon_type']}, ${dungeon['current_room']}` : 'No dungeon'}</div>
       </div>
     </>
   )

@@ -27,16 +27,22 @@ const Heroes: React.FC<HeroesProps> = ({ hero1, hero2, hero3, signer, hire }) =>
 
         <div style={heroesStyle}>
             <button style={child} onClick={() => hire(signer, 1, HeroType.Archer)}>
-                <img width="90px" src="./src/assets/game/heroes/plus.png" alt="Hero 1" />
-                <div>exp :</div>
+                {hero1 ? <img width="90px" src="./src/assets/game/heroes/Ranger.jpg" alt="Hero 1" />
+                    : <img width="90px" src="./src/assets/game/heroes/plus.png" alt="Hero 1" />
+                }
+                {hero1 && `exp : ${hero1['exp']}`}
             </button>
-            <button style={child} onClick={() => hire(signer, 2, HeroType.Archer)}>
-                <img width="90px" src="./src/assets/game/heroes/plus.png" alt="Hero 2" />
-                <div>exp :</div>
+            <button style={child} onClick={() => hire(signer, 2, HeroType.Mage)}>
+                {hero2 ? <img width="90px" src="./src/assets/game/heroes/Shaman.jpg" alt="Hero 2" />
+                    : <img width="90px" src="./src/assets/game/heroes/plus.png" alt="Hero 2" />
+                }
+                {hero2 && `exp : ${hero2['exp']}`}
             </button>
-            <button style={child} onClick={() => hire(signer, 3, HeroType.Archer)}>
-                <img width="90px" src="./src/assets/game/heroes/plus.png" alt="Hero 3" />
-                <div>exp :</div>
+            <button style={child} onClick={() => hire(signer, 3, HeroType.Druid)}>
+                {hero3 ? <img width="90px" src="./src/assets/game/heroes/Druid.jpg" alt="Hero 3" />
+                    : <img width="90px" src="./src/assets/game/heroes/plus.png" alt="Hero 3" />
+                }
+                {hero3 && `exp : ${hero3['exp']}`}
             </button>
         </div>
 
