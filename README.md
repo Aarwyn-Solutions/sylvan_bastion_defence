@@ -2,7 +2,7 @@
 
 Auto battler powered with Dojo engine 🎇🏹🛡🗡⚔🌟
 
-In The Defence of Sylvan Bastions, you can lead a team of three heroes ⚔ to protect the realm of the wood elves from various dangers. You can customize your team by choosing from different hero classes and find the best combination for your strategy. You can then challenge different dungeons, where you will face enemies in an autobattle mode. You don't have to control your heroes manually. The game takes place in the Wood Elves Valley, a beautiful and mysterious land where you can discover the secrets and stories of the wood elves and their foes.
+In The Defence of Sylvan Bastions, you can lead a team of three heroes ⚔ to protect the realm of the wood elves from various dangers. You can customize your team by choosing from different hero classes and find the best combination ⭐ for your strategy. You can then challenge different dungeons 🌇, where you will face enemies in an autobattle mode 🏹. You don't have to control your heroes manually. The game takes place in the Wood Elves Valley 🧝‍♂️, a beautiful and mysterious land where you can discover the secrets and stories of the wood elves and their foes.
 
 ## How to start game
 Terminal 1 - Katana:
