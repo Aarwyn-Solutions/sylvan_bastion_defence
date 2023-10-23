@@ -93,7 +93,7 @@ function App() {
         <div>Player hero3: {player ? (hero3 ? `${hero3['hero_type']} ${hero3['exp']}` : 'Need to hire hero') : 'Need to create_player'}</div>
         <button onClick={() => hire_hero(account, 1, HeroType.Archer)}>Hire hero</button> */}
 
-        <div>Current dungeon: {dungeon ? `${dungeon['dungeon_type']}, ${dungeon['current_room']}` : 'No dungeon'}</div>
+        <div >Current dungeon: {dungeon ? (dungeon.dungeon_type != 0 ? `type: ${dungeon['dungeon_type']}, room: ${dungeon['current_room']}` : 'No dungeon') : 'No dungeon'}</div>
       </div>
     </>
   )
@@ -102,17 +102,15 @@ function App() {
     {(<div>
       <button onClick={() => next_room(account)}>Next room</button>
       <button onClick={() => leave_dungeon(account)}>Leave</button>
-
-    </div>)}</>)
+      {dungeon && dungeon.dungeon_type != 0 && <div >dungeon: {dungeon ? (dungeon.dungeon_type != 0 ? `type: ${dungeon['dungeon_type']}, room: ${dungeon['current_room']}` : 'No dungeon') : 'No dungeon'}</div>
+      }    </div>)}</>)
 
   return (
     <>
       <div className="container" style={appStyles}>
-        <Map imageUrl={mapImageUrl} onBlockClick={handleBlockClick} dungeon={dungeonActions} />
-        <Menu selectedBlock={selectedBlock} inner={actions} />
+        <Map imageUrl={mapImageUrl} onBlockClick={handleBlockClick} />
+        <Menu selectedBlock={selectedBlock} inner={actions} dungeonAction={dungeonActions} />
       </div>
-
-
     </>
   );
 }

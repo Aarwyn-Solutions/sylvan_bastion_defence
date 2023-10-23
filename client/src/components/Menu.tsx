@@ -5,9 +5,10 @@ import { BastionInfo } from "./Bastion";
 type MenuProps = {
   selectedBlock: BastionInfo | DungeonInfo | null;
   inner: JSX.Element;
+  dungeonAction: JSX.Element;
 };
 
-const Menu: React.FC<MenuProps> = ({ selectedBlock, inner }) => {
+const Menu: React.FC<MenuProps> = ({ selectedBlock, inner, dungeonAction }) => {
   const [userInput, setUserInput] = useState("");
 
   const menuContainerStyle: React.CSSProperties = {
@@ -42,13 +43,20 @@ const Menu: React.FC<MenuProps> = ({ selectedBlock, inner }) => {
 
   return (
     <div style={menuContainerStyle}>
-      {selectedBlock ? (
+      {selectedBlock ? (selectedBlock.is_dungeon ? (
+        <div>
+          <p>{selectedBlock.name}</p>
+          {dungeonAction}
+          {selectedBlock.image ? <img src={selectedBlock.image} style={menuImageStyles} /> : <></>}
+          <p>{selectedBlock.description}</p>
+        </div>
+      ) : (
         <div>
           <p>{selectedBlock.name}</p>
           {selectedBlock.image ? <img src={selectedBlock.image} style={menuImageStyles} /> : <></>}
           <p>{selectedBlock.description}</p>
         </div>
-      ) : (
+      )) : (
         <p>Select a block to see details</p>
       )}
       {inner}

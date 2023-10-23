@@ -4,6 +4,7 @@ export type BastionInfo = {
   name: string;
   description: string;
   image: string | null;
+  is_dungeon: boolean;
 };
 
 type BastionProps = {
@@ -32,6 +33,7 @@ const Bastion: React.FC<BastionProps> = ({ imageUrl, index, onClick }) => {
       name: `Bastion ${index}`,
       description: `Description block for ${index}`,
       image: null,
+      is_dungeon: false,
     };
 
     onClick(bastionInfo);

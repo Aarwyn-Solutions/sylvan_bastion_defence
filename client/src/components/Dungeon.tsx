@@ -11,6 +11,7 @@ export type DungeonInfo = {
   name: string;
   description: string | null;
   image: string | null;
+  is_dungeon: boolean;
 };
 
 type DungeonProps = {
@@ -51,6 +52,7 @@ const Dungeon: React.FC<DungeonProps> = ({
       name: name,
       description: description,
       image: imageBig,
+      is_dungeon: true,
     };
 
     onClick(dungeonInfo);
