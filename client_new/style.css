@@ -1,0 +1,114 @@
+.map {
+  position: relative;
+  max-width: 1024px;
+  width: 100%;
+  height: auto;
+}
+
+section.map .bastion {
+  position: absolute;
+  width: 15%;
+  z-index: 1;
+  border-radius: 50%;
+  border: 5px solid whitesmoke;
+}
+
+section.map .dungeon {
+  position: absolute;
+  bottom: 30%;
+  left: 30%;
+  width: 10%;
+  z-index: 1;
+  border-radius: 50%;
+  border: 3px solid lightgray;
+  filter: grayscale(80%);
+}
+section.map .dungeon:hover {
+  filter: none;
+}
+
+/* section.map .bastion:hover {
+  width: 200px;
+  height: 200px;
+  border-radius: 150px;
+} */
+section.map .bastion.bastion1 {
+  bottom: 60%;
+  left: 70%;
+}
+
+section.map .bastion.bastion2 {
+  bottom: 49%;
+  left: 34%;
+}
+
+section.map .bastion.bastion3 {
+  bottom: 17%;
+  left: 48%;
+}
+
+/* bastion 1 dungeons */
+section.map .bastion1.d1 {
+  bottom: 45%;
+  left: 65%;
+}
+section.map .bastion1.d2 {
+  bottom: 75%;
+  left: 88%;
+}
+
+section.map .bastion1.d3 {
+  bottom: 78%;
+  left: 60%;
+}
+
+section.map .bastion1.d4 {
+  bottom: 50%;
+  left: 85%;
+}
+
+/* bastion 2 dungeons */
+section.map .bastion2.d1 {
+  bottom: 84%;
+  left: 27%;
+}
+
+section.map .bastion2.d2 {
+  bottom: 64%;
+  left: 20%;
+}
+
+section.map .bastion2.d3 {
+  bottom: 71%;
+  left: 41%;
+}
+
+section.map .bastion2.d4 {
+  bottom: 33%;
+  left: 32%;
+}
+
+section.map .bastion2.d5 {
+  bottom: 42%;
+  left: 9%;
+}
+
+/* bastion 3 dungeons */
+section.map .bastion3.d1 {
+  bottom: 21%;
+  left: 4%;
+}
+section.map .bastion3.d2 {
+  bottom: 17%;
+  left: 88%;
+}
+
+section.map .bastion3.d3 {
+  bottom: 8%;
+  left: 34%;
+}
+
+section.map .bastion3.d4 {
+  bottom: 7%;
+  left: 66%;
+}

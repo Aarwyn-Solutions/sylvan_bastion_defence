@@ -1,0 +1,49 @@
+/* css reset */
+body,
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li,
+form,
+input,
+textarea,
+button,
+span,
+table,
+td,
+tr,
+th,
+thead,
+tbody,
+select,
+option,
+pre,
+code,
+blockquote,
+em,
+strong,
+small,
+img,
+iframe,
+nav,
+footer,
+header,
+section,
+article,
+aside,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+  /* border: 0; */
+  /* vertical-align: baseline; */
+  /* outline: none; */
+  background-color: #3b3b3b;
+  color: antiquewhite;
+}
