@@ -1,5 +1,5 @@
 /* css reset */
-body,
+
 div,
 p,
 h1,
@@ -41,7 +41,16 @@ figure,
 figcaption {
   margin: 0;
   padding: 0;
-  /* border: 0; */
+  border: 0;
+  outline: none;
+  /* vertical-align: baseline; */
+  color: antiquewhite;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
   /* vertical-align: baseline; */
   /* outline: none; */
   background-color: #3b3b3b;
