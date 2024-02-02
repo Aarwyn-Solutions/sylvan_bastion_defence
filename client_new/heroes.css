@@ -1,0 +1,32 @@
+body {
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1000px;
+  grid-template-areas: "heroes party";
+}
+
+section.heroes {
+  background-image: url(./assets/heroes/bar1.jpg);
+  background-position: center;
+  background-size: cover;
+  height: auto;
+  grid-area: heroes;
+}
+
+section.party {
+  background-image: url(./assets/heroes/bar2.jpg);
+  background-position: center;
+  background-size: cover;
+  grid-area: party;
+}
+
+@media screen and (max-width: 900px) {
+  body {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 1000px;
+    grid-template-areas: "heroes" "party";
+  }
+}
