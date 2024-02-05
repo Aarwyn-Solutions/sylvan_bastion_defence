@@ -1,24 +1,123 @@
 body {
+  padding: 0;
+  margin: 0;
+  position: relative;
   text-align: center;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 1000px;
   grid-template-areas: "heroes party";
+  height: 100vh;
+}
+:root {
+  --border-color: rgba(188, 143, 143, 0.71);
+  --background-light: rgba(167, 167, 167, 0.629);
+}
+nav {
+  position: absolute;
+  width: 50px;
+  height: 100vh;
+  background-color: black;
+  display: grid;
 }
 
 section.heroes {
   background-image: url(./assets/heroes/bar1.jpg);
+  background-color: black;
   background-position: center;
   background-size: cover;
-  height: auto;
+  height: 100vh;
   grid-area: heroes;
+}
+
+section.heroes .herostack {
+  margin: 50px 70px 0;
+}
+.herobillet {
+  background-color: black;
+  border: var(--border-color) 2px solid;
+  margin: 5px 0;
+  width: 200px;
+  height: 70px;
+  display: flex;
+}
+.herobillet img {
+  margin: auto 0;
+  height: 100%;
+}
+.herobillet h3 {
+  font-size: large;
+  margin: 10% 0;
+  display: block;
+}
+.herobillet p {
+  margin: 0 5%;
+  font-size: x-small;
+  display: inline;
+}
+.herobillet .stats {
+  margin: 0% 5%;
+}
+.herobillet .heroshortdesc {
+  width: 100%;
 }
 
 section.party {
   background-image: url(./assets/heroes/bar2.jpg);
+  background-color: black;
   background-position: center;
   background-size: cover;
   grid-area: party;
+  height: 100vh;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.party-grid-2 {
+  align-self: center;
+}
+section.party h1 {
+  padding: 30px 0px 0px;
+}
+section.party p {
+  padding: 30px 0;
+}
+section.party button {
+  margin: 10px 0;
+  padding: 30px;
+  background: var(--background-light);
+  text-transform: uppercase;
+  font-size: large;
+}
+section.party button:hover {
+  background-color: var(--border-color);
+}
+.yourparty {
+  margin: 10px 0;
+  height: 150px;
+  width: 350px;
+  background: var(--background-light);
+}
+.yourparty h2 {
+  text-align: center;
+  padding: 10px 10px 0px 10px;
+}
+.yourheroes {
+  margin: auto;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+
+.yourhero {
+  margin: 10px;
+  height: 80px;
+  width: 80px;
+  border: var(--border-color) 2px solid;
+}
+.yourhero img {
+  height: 80px;
+  width: 80px;
 }
 
 @media screen and (max-width: 900px) {
@@ -26,7 +125,59 @@ section.party {
     text-align: center;
     display: grid;
     grid-template-columns: 1fr;
-    height: 1000px;
-    grid-template-areas: "heroes" "party";
+    grid-auto-rows: 45%;
+    grid-template-areas: "party" "heroes";
+    height: 100%;
   }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    height: 50px;
+    width: 100%;
+  }
+  section.heroes,
+  section.party {
+    height: 50vh;
+    overflow: hidden;
+  }
+  section.party {
+    padding: 50px 0;
+  }
+  section.party p {
+    display: none;
+  }
+  section.heroes .herostack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    margin: auto 0;
+  }
+  .herobillet {
+    text-align: left;
+    width: 95%;
+  }
+  .herobillet .stats {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .herobillet p {
+    margin: 0;
+  }
+  section.party * {
+    margin: 0 auto;
+  }
+  .party-grid-2 {
+    display: grid;
+  }
+  section.party button {
+    justify-self: center;
+    margin: 5% auto;
+  }
+  /* .yourparty {
+    position: sticky;
+    top: 50px;
+  } */
 }
