@@ -1,6 +1,7 @@
 body {
   background-image: url("assets/map.jpg");
   background-color: black;
+  background-blend-mode: overlay;
   background-position: center;
   background-size: cover;
   padding: 0;
@@ -36,14 +37,14 @@ section h1 {
 
 section button {
   align-self: center;
-  padding: 20px 50px;
+  padding: 20px 70px;
   font-size: 80px;
-  /* background: rgba(246, 246, 246, 0.3);
-  color: rgba(240, 240, 240, 0.8); */
+  background-color: rgba(224, 224, 224, 0.225);
+  border: 3px solid var(--golden-color);
 }
 section button:hover {
-  /* background: rgba(246, 246, 246, 0.7);
-  color: rgba(240, 240, 240, 1); */
+  background-color: rgba(223, 214, 196, 0.621);
+  background-blend-mode: lighten;
 }
 
 footer {
