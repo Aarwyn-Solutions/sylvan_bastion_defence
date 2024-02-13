@@ -44,9 +44,10 @@ figcaption {
   border: 0;
   outline: none;
   /* vertical-align: baseline; */
-  color: antiquewhite;
+  color: var(--text-color);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  /* box-sizing: border-box; */
 }
 
 body {
@@ -55,6 +56,22 @@ body {
   border: 0;
   /* vertical-align: baseline; */
   /* outline: none; */
-  background-color: #3b3b3b;
-  color: antiquewhite;
+  background-color: var(--background-color);
+}
+
+:root {
+  --text-color: whitesmoke;
+  --background-color: #3b3b3b;
+  --border-color: rgba(188, 143, 143, 0.71);
+  --background-light: rgba(167, 167, 167, 0.629);
+  --golden-color: #e6a439;
+}
+
+button {
+  background: var(--background-light);
+  text-transform: uppercase;
+  font-size: large;
+}
+button:hover {
+  background-color: var(--border-color);
 }

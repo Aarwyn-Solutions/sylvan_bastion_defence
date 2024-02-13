@@ -1,6 +1,4 @@
 body {
-  padding: 0;
-  margin: 0;
   position: relative;
   text-align: center;
   display: grid;
@@ -9,10 +7,7 @@ body {
   grid-template-areas: "heroes party";
   height: 100vh;
 }
-:root {
-  --border-color: rgba(188, 143, 143, 0.71);
-  --background-light: rgba(167, 167, 167, 0.629);
-}
+
 nav {
   position: absolute;
   width: 50px;
