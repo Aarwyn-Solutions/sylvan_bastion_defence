@@ -45,9 +45,12 @@ figcaption {
   outline: none;
   /* vertical-align: baseline; */
   color: var(--text-color);
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
   /* box-sizing: border-box; */
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: <weight>; */
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
 }
 
 body {
@@ -57,6 +60,14 @@ body {
   /* vertical-align: baseline; */
   /* outline: none; */
   background-color: var(--background-color);
+}
+
+h1 {
+  /* color: var(--golden-color); */
+  font-weight: 400;
+  font-size: 40px;
+  margin-bottom: 20px;
+  text-transform: capitalize;
 }
 
 :root {
