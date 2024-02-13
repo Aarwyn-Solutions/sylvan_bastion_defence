@@ -1,0 +1,51 @@
+.bastion2,
+.bastion3 {
+  display: none;
+}
+
+section.description {
+  background-color: rgb(72, 72, 72);
+  background-image: url("assets/bastion1/b.png");
+  background-position: center;
+  background-blend-mode: multiply;
+}
+
+section.map img {
+  transform: scale(1.5);
+  transform-origin: top right; /* Change as needed */
+}
+
+section.map .bastion.bastion1 {
+  transform-origin: center;
+  transform: scale(1.8);
+  bottom: 50%;
+  left: 60%;
+}
+
+section.map .dungeon {
+  transition: 0.2;
+  transform-origin: center;
+}
+section.map .dungeon:hover {
+  transform: scale(1.8);
+}
+
+/* bastion 1 dungeons */
+section.map .bastion1.d1 {
+  bottom: 25%;
+  left: 40%;
+}
+section.map .bastion1.d2 {
+  bottom: 78%;
+  left: 83%;
+}
+
+section.map .bastion1.d3 {
+  bottom: 78%;
+  left: 40%;
+}
+
+section.map .bastion1.d4 {
+  bottom: 30%;
+  left: 85%;
+}
