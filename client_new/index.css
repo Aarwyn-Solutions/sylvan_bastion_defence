@@ -62,19 +62,29 @@ body {
   background-color: var(--background-color);
 }
 
+h1,
+h2,
+h3 {
+  font-weight: 400;
+}
+
 h1 {
   /* color: var(--golden-color); */
-  font-weight: 400;
   font-size: 40px;
   margin-bottom: 20px;
   text-transform: capitalize;
 }
 
+h2 {
+  margin-bottom: 15px;
+}
+
 :root {
   --text-color: whitesmoke;
   --background-color: #3b3b3b;
-  --border-color: rgba(188, 143, 143, 0.71);
-  --background-light: rgba(167, 167, 167, 0.629);
+  --border-color: rgb(188, 143, 143);
+  --border-color-transparent: rgb(188, 143, 143, 0.6);
+  --background-light: rgba(167, 167, 167, 0.34);
   --golden-color: #e6a439;
 }
 
@@ -82,7 +92,9 @@ button {
   background: var(--background-light);
   text-transform: uppercase;
   font-size: large;
+  margin: 10px 0;
+  padding: 25px 35px;
 }
 button:hover {
-  background-color: var(--border-color);
+  background-color: var(--border-color-transparent);
 }
