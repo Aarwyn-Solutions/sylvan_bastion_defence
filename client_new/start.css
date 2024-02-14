@@ -1,0 +1,52 @@
+body {
+  background-image: url("assets/map.jpg");
+  background-color: black;
+  background-blend-mode: overlay;
+  background-position: center;
+  background-size: cover;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  height: 100vh;
+}
+
+section {
+  position: relative;
+  height: 90vh;
+}
+
+section h1 {
+  align-self: center;
+  color: whitesmoke;
+  margin: 35vh 0 10vh;
+  font-size: 70px;
+  text-align: center;
+}
+
+/* img {
+  z-index: -1;
+  width: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  overflow: hidden;
+  height: 100vh;
+}*/
+
+section button {
+  align-self: center;
+  padding: 20px 70px;
+  font-size: 80px;
+  background-color: rgba(224, 224, 224, 0.225);
+  border: 3px solid var(--golden-color);
+}
+section button:hover {
+  background-color: rgba(223, 214, 196, 0.621);
+  background-blend-mode: lighten;
+}
+
+footer {
+  text-align: center;
+}
