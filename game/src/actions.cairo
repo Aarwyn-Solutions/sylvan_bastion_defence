@@ -103,7 +103,7 @@ mod actions {
     }
 
     // impl: implement functions specified in trait
-    #[external(v0)]
+    #[abi(embed_v0)]
     impl ActionImpl of IActions<ContractState> {
         fn create_player(self: @ContractState,) {
             let world = self.world_dispatcher.read();
@@ -142,7 +142,7 @@ mod actions {
             let mut player = get!(world, (id), (Player));
             assert(player.gold >= gold, 'not enough gold');
             player.gold -= gold;
-   
+
             current_dungeon.squad_health = gold*100;
             current_dungeon.current_room = 1;
 
@@ -240,8 +240,8 @@ mod actions {
         let hero_1 = get!(world, (player.id), (Hero1));
         let hero_2 = get!(world, (player.id), (Hero2));
         let hero_3 = get!(world, (player.id), (Hero3));
-        let has_shaman = hero_1.hero_type == HeroType::Shaman || 
-                         hero_2.hero_type == HeroType::Shaman || 
+        let has_shaman = hero_1.hero_type == HeroType::Shaman ||
+                         hero_2.hero_type == HeroType::Shaman ||
                          hero_3.hero_type == HeroType::Shaman;
         let shaman_multiplier = if has_shaman {2} else {1};
 
@@ -258,8 +258,8 @@ mod actions {
         let hero_1 = get!(world, (player.id), (Hero1));
         let hero_2 = get!(world, (player.id), (Hero2));
         let hero_3 = get!(world, (player.id), (Hero3));
-        let has_guardian = hero_1.hero_type == HeroType::Guardian || 
-                           hero_2.hero_type == HeroType::Guardian || 
+        let has_guardian = hero_1.hero_type == HeroType::Guardian ||
+                           hero_2.hero_type == HeroType::Guardian ||
                            hero_3.hero_type == HeroType::Guardian;
 
         let guardian_multiplier = if has_guardian {2} else {1};
@@ -329,7 +329,7 @@ mod tests {
     #[available_gas(200000000)]
     fn create_player_ok() {
         let player_address = starknet::contract_address_const::<0x01>();
-        
+
         let world = init();
 
         let contract_address = world
@@ -345,7 +345,7 @@ mod tests {
     #[available_gas(2000000000)]
     fn hire_hero_ok() {
         let player_address = starknet::contract_address_const::<0x01>();
-        
+
         let world = init();
 
         let contract_address = world
@@ -390,7 +390,7 @@ mod tests {
     #[available_gas(2000000000)]
     fn enter_dungeon_ok() {
         let player_address = starknet::contract_address_const::<0x01>();
-        
+
         let world = init();
 
         let contract_address = world
@@ -412,7 +412,7 @@ mod tests {
     #[available_gas(2000000000)]
     fn next_room_ok() {
         let player_address = starknet::contract_address_const::<0x01>();
-        
+
         let world = init();
 
         let contract_address = world
@@ -455,7 +455,7 @@ mod tests {
     #[available_gas(2000000000)]
     fn leave_dungeon_ok() {
         let player_address = starknet::contract_address_const::<0x01>();
-        
+
         let world = init();
 
         let contract_address = world

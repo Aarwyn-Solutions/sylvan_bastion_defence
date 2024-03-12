@@ -1,8 +1,8 @@
 use array::ArrayTrait;
 use core::debug::PrintTrait;
 use starknet::ContractAddress;
-use dojo::database::schema::{
-    Enum, Member, Ty, Struct, SchemaIntrospection, serialize_member, serialize_member_type
+use dojo::database::introspect::{
+    Enum, Member, Ty, Struct, serialize_member, serialize_member_type
 };
 
 #[derive(Model, Copy, Drop, Serde, Print)]
@@ -17,8 +17,8 @@ mod heroes {
     use array::ArrayTrait;
     use core::debug::PrintTrait;
     use starknet::ContractAddress;
-    use dojo::database::schema::{
-        Enum, Member, Ty, Struct, SchemaIntrospection, serialize_member, serialize_member_type
+    use dojo::database::introspect::{
+        Enum, Member, Ty, Struct, serialize_member, serialize_member_type
     };
 
 
@@ -102,7 +102,7 @@ mod heroes {
                 HeroType::Vendigo => 90,
                 HeroType::Guardian => 90,
             };
-                    
+
             let mutiplier = if exp < 100 {1} else if exp > 100 && exp < 200 {2} else {3};
             base_defence*mutiplier
         }
@@ -141,8 +141,8 @@ mod dungeon {
     use array::ArrayTrait;
     use core::debug::PrintTrait;
     use starknet::ContractAddress;
-    use dojo::database::schema::{
-        Enum, Member, Ty, Struct, SchemaIntrospection, serialize_member, serialize_member_type
+    use dojo::database::introspect::{
+        Enum, Member, Ty, Struct, serialize_member, serialize_member_type
     };
 
     #[derive(Model, Copy, Drop, Serde, Print)]
