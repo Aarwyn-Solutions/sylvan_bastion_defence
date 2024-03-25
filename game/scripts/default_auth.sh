@@ -6,10 +6,10 @@ export RPC_URL="http://localhost:5050";
 
 export WORLD_ADDRESS=$(cat ./target/dev/manifest.json | jq -r '.world.address')
 
-export ACTIONS_ADDRESS=$(cat ./target/dev/manifest.json | jq -r '.contracts[] | select(.name == "actions" ).address')
+export ACTIONS_ADDRESS=$(cat ./target/dev/manifest.json | jq -r '.contracts[] | select(.name == "sylvan_bastion_defence::actions::actions" ).address')
 
 echo "---------------------------------------------------------------------------"
-echo world : $WORLD_ADDRESS 
+echo world : $WORLD_ADDRESS
 echo " "
 echo actions : $ACTIONS_ADDRESS
 echo "---------------------------------------------------------------------------"
@@ -19,6 +19,8 @@ COMPONENTS=("Player" "CurrentDungeon" "Hero1" "Hero2" "Hero3")
 
 for component in ${COMPONENTS[@]}; do
     sozo auth writer $component $ACTIONS_ADDRESS --world $WORLD_ADDRESS --rpc-url $RPC_URL
+    # time out for 1 second to avoid rate limiting
+    sleep 1
 done
 
 echo "Default authorizations have been successfully set."
