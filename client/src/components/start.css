@@ -1,6 +1,5 @@
 body {
-  background-image: url("assets/map.jpg");
-  background-color: black;
+  background-image: url("../assets/map.jpg");
   background-blend-mode: overlay;
   background-position: center;
   background-size: cover;
